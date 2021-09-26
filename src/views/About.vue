@@ -8,16 +8,16 @@
 
 <template>
   <div class="about">
-  <div style="width: 600px">
-    <vue-table-dynamic 
-      :params="params"
-      @select="onSelect" 
-      @selection-change="onSelectionChange"
-      @cell-change="onCellChange"
-      ref="table"
-    >
-    </vue-table-dynamic>
-  </div>
+    <div style="width: 600px">
+      <vue-table-dynamic 
+        :params="params"
+        @select="onSelect" 
+        @selection-change="onSelectionChange"
+        @cell-change="onCellChange"
+        ref="table"
+      >
+      </vue-table-dynamic>
+    </div>
   </div>
 </template>
 
@@ -46,7 +46,7 @@ export default {
         enableSearch: true,
         sort: [0, 1,2,3],
         edit: {
-          //row: [1,2,3],
+          row: [],
           column: [1],
           cell: [[-1, -1]],
           getData:function() {console.log("The getData function was called")}

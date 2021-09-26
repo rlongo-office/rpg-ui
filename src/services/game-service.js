@@ -1,0 +1,1 @@
+const gameApi = require('../../game-api');
