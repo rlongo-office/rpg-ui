@@ -32,6 +32,7 @@ export default {
   name: 'Demo',
   data() {
     return {
+      character:{},
       params: {
         data: [
           ['Index', `Data1`, `Data2`, `Data3`]
@@ -57,7 +58,7 @@ export default {
   mounted () {
     for (let i = 0; i < 100; i++) {
       this.params.data.push([i+1, `${random()}`, `${random()}`, `${random()}`])
-    }
+    };
   },
     methods: {
     onSelect (isChecked, index, data) {

@@ -1,12 +1,29 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
-  </div>
+  <v-app>
+    <template v-if="isConnected">
+      <AppNavigation></AppNavigation>
+      <v-container>
+        <router-view />
+      </v-container>
+    </template>
+    <template v-else>
+      <login-view></login-view>
+    </template>
+  </v-app>
 </template>
+<script>
+import AppNavigation from "./components/AppNavigation.vue";
+import LoginView from "./views/login.vue"
+import GameService from './game-service/game-service';
+
+    export default {
+        name: 'App',
+        components: {AppNavigation, LoginView},
+        computed:{
+          isConnected: () => GameService.isConnected
+        }
+    }
+</script>
 
 <style>
 #app {
