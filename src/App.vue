@@ -26,6 +26,7 @@ import GameService from './game-service/game-service';
 </script>
 
 <style>
+@import './assets/styles/appstyle.css';
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
