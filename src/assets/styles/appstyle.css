@@ -19,3 +19,16 @@
   background-color: #04AA6D;
   color: white;
 }
+
+.loginInput {
+    border: 1px solid #000000 !important;
+    border-style: solid;
+    box-sizing: border-box;
+    width: 100px;
+    padding: 5px;
+    font-size: 20px;
+}
+
+.loginbtn {
+    padding: 20px;
+}

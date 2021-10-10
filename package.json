@@ -10,11 +10,14 @@
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
     "core-js": "^3.6.5",
+    "sockjs": "^0.3.21",
+    "sockjs-client": "^1.5.2",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
     "vue-table-dynamic": "^0.4.10",
     "vuetify": "^2.4.0",
-    "vuex": "^3.4.0"
+    "vuex": "^3.4.0",
+    "webstomp-client": "^1.2.6"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

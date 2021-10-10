@@ -8,7 +8,7 @@
           <span>Inventory</span>
           <v-icon color=#ffffff>mdi-sack</v-icon>
         </v-btn>
-        <v-btn to="/about" class="white--text">
+        <v-btn to="/Chat2" class="white--text">
           <span>Chat</span>
           <v-icon color=#ffffff>mdi-message-outline</v-icon>
         </v-btn>
