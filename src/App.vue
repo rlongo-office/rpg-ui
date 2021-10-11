@@ -14,13 +14,13 @@
 <script>
 import AppNavigation from "./components/AppNavigation.vue";
 import LoginView from "./views/login.vue"
-import GameService from './game-service/game-service';
+//import gameService from './services/game-service';
 
     export default {
         name: 'App',
         components: {AppNavigation, LoginView},
-        computed:{
-          isConnected: () => GameService.isConnected
+        created() {
+          this.isConnected = true;
         }
     }
 </script>

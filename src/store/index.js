@@ -3,7 +3,7 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 import character from "../data/character.json"
-import gameService from "../services/game-service";
+//import gameService from "../services/game-service";
 console.log(character.skills)
 
 export default new Vuex.Store({
@@ -24,7 +24,7 @@ export default new Vuex.Store({
   },
   actions: {
     connect() {
-      gameService.connect();
+      //gameService.connect();
     }
   },
   modules: {},

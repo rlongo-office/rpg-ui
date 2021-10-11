@@ -24,7 +24,7 @@
     </v-form>
 </template>
 <script>
-import GameService from "../game-service"
+import gameService from "../services/game-service"
 
 export default {
   name: "App",
@@ -38,7 +38,7 @@ export default {
     async login() {
       const { username, password } = this;  //object deconstruction - E6 edition to javascript
       //using websocket connection? Have view component call our Game Service instead
-      if(await GameService.connect(username, password)) {
+      if(await gameService.connect(username, password)) {
           // success
       } else {
           // failed
