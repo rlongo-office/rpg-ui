@@ -78,6 +78,9 @@
 </template>
 
 <script>
+import SockJS from "sockjs-client";
+import WebStompClient from 'webstomp-client';
+
 export default {
   name: "chat2",
   data() {
@@ -110,8 +113,35 @@ export default {
         this.stompClient.send("/app/messages", stringMsg, {});
       }
     },
-    connect: function() {
-    },
+  connect: function() {
+              this.socket = new SockJS("http://localhost:8090/game-app");
+              this.stompClient = WebStompClient.over(this.socket);
+              this.connected = true;
+              this.stompClient.connect(
+                { username: this.userName,},
+                frame =>{
+                    console.log(frame);
+                    this.stompClient.subscribe('/topic/chat', (message)=> {
+                      console.log("You have recieved a chat message:" + message);
+                      this.msgCount += 1;
+                      const chatMessage = JSON.stringify(message.body);
+                      const newMessage = {"id":this.msgCount,"type":"G","body":chatMessage}
+                      this.allMessages.push(newMessage);
+                   });
+                    this.stompClient.subscribe('/user/queue/message', (message)=> {
+                      this.msgCount += 1;
+                      const chatMessage = JSON.stringify(message.body);
+                      const newMessage = {"id":this.msgCount,"type":"P","body":chatMessage}
+                      //this.received_messages.push(newMessage);
+                      this.allMessages.push(newMessage);
+                    });
+                },
+                error => {
+                  console.log(error);
+                  this.connected = false;
+                }
+              );        
+            },
     disconnect() {
       if (this.stompClient) {
         this.stompClient.disconnect();
