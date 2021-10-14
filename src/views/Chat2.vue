@@ -113,7 +113,7 @@ export default {
         this.stompClient.send("/app/messages", stringMsg, {});
       }
     },
-  connect: function() {
+    connect: function() {
               this.socket = new SockJS("http://localhost:8090/game-app");
               this.stompClient = WebStompClient.over(this.socket);
               this.connected = true;

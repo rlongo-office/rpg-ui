@@ -3,6 +3,8 @@ import WebStompClient from 'webstomp-client';
 
 // define the game service resources here
 let _isConnected = false;
+let _socket = null;
+let _stompClient = null;
 
 // eslint-disable-next-line no-unused-vars
 const _eventHandlers = {
@@ -22,6 +24,7 @@ const messageHandler = (messageType, body) => {
     }
 }
 
+
 const connectionSuccess = () => {
     _isConnected = true;
 
@@ -36,8 +39,9 @@ const connectionSuccess = () => {
     }
 }
 
-const connectionError = () => {
-
+const connectionError = (error) => {
+    console.log(error);
+    _isConnected = false;
 }
 
 export default {
@@ -52,26 +56,35 @@ export default {
     },
     connect(username, password) {
         _isConnected = false;
-        this.socket = new SockJS("http://localhost:8090/game-app");
-        this.stompClient = WebStompClient.over(this.socket);
-        this.stompClient.connect({username, password}, connectionSuccess, connectionError);
+        _socket = new SockJS("http://localhost:8090/game-app");
+        _stompClient = WebStompClient.over(_socket);
+        _stompClient.connect({username, password}, connectionSuccess, connectionError);
     },
-    async disconnect() {
-        _isConnected = true;
-    },
-    sendChatMessage(message) {
-        //const { user, channel, body} = message;
 
-        //some code to send over the "/chat" url?
-        return message;
+    async disconnect() {
+        _isConnected = false;
     },
+
+    sendMessage(msg) {
+        let type = msg.type;
+        let body = msg.body;
+        //const { user, channel, body} = message;
+        console.log("Sending message:" + body);
+        if (_stompClient && _isConnected) {
+          _stompClient.send("/app/chat", body, {});
+        }
+        switch(type){
+            case "Party": _stompClient.send("/app/chat", body, {}); break;
+            case "Private": _stompClient.send("/app/chat", body, {}); break;
+            case "Roll": _stompClient.send("/app/chat", body, {}); break;
+        }
+        //some code to send over the "/chat" url?
+    },
+
     get isConnected() {
         return _isConnected;
     }
 };
-
-
-
 /*
             this.connected = true;
             console.log(frame);
