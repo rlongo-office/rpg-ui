@@ -8,24 +8,30 @@ console.log(character.skills)
 
 export default new Vuex.Store({
   state: {
-    connected: false,
-    allMessages: [],
-    totalSkills: 10,
-    skills:[
-            {name: "Acrobatics",value: 4},
-            {name: "Perception",value: 2},
-            {name: "Language:Orcish",value: 5}         
-           ],
-    character: character
+    isConnected: false,
+    messages: [],
+    character: {}
   },
   mutations: {
     setConnected(state, isConnected) {
-      state.connected = isConnected;
-    }
+      state.isConnected = isConnected;
+    },
+    addMessage(state, msg) {
+      state.messages = [...state.messages, msg];
+    },
   },
   actions: {
-    connect() {
-      gameService.connect();
+    connect({username, password}) {
+      gameService.connect(username, password);
+    },
+    setConnected(context, isConnected) {
+      context.commit('setConnected', isConnected);
+    },
+    sendMessage(msg) {
+      gameService.sendMessage(msg);
+    },
+    addMessage(context, msg) {
+      context.commit('addMessage', msg);
     }
   },
   modules: {},

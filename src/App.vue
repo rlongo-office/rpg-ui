@@ -12,17 +12,24 @@
   </v-app>
 </template>
 <script>
-import AppNavigation from "./components/AppNavigation.vue";
-import LoginView from "./views/login.vue"
-//import gameService from './services/game-service';
-
-    export default {
-        name: 'App',
-        components: {AppNavigation, LoginView},
-        created() {
-          this.isConnected = true;
-        }
+  import AppNavigation from "./components/AppNavigation.vue";
+  import LoginView from "./views/login.vue"
+  export default {
+    name: 'App',
+    data(){
+      return {
+      };
+    },
+    computed: {
+      isConnected() {
+        return this.$store.state.isConnected;
+      }
+    },
+    components: {AppNavigation, LoginView},
+    created() {
+      this.isConnected = true;
     }
+  }
 </script>
 
 <style>

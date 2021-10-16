@@ -11,10 +11,14 @@ const _eventHandlers = {
     'connect': [], // functions to call when a connect event occurs
     'disconnect': [],
     'message': [],
+    'load': [],
 };
 
 // eslint-disable-next-line no-unused-vars
+
 const messageHandler = (messageType, body) => {
+    messageType = "";
+    body = "";
     // fire the 'connect' callbacks
     const event = {
         messageType, body
@@ -22,6 +26,8 @@ const messageHandler = (messageType, body) => {
     for(let listener in _eventHandlers['message']) {
         listener.call(event);
     }
+    return {messageType: messageType, body: body}
+
 }
 
 
@@ -29,13 +35,14 @@ const connectionSuccess = () => {
     _isConnected = true;
 
     // register ''default' message channel listeners
-    this.stompClient.subscribe('/topic/chat',message => messageHandler('general', message));
-    this.stompClient.subscribe('/user/queue/message', message => messageHandler('private', message));
+    _stompClient.subscribe('/topic/chat',message => messageHandler('general', message));
+    _stompClient.subscribe('/user/queue/message', message => messageHandler('private', message));
 
     // fire the 'connect' callbacks to all registered connect listeners
-    const event = {}; // event deatils
-    for(let listener in _eventHandlers['connect']) {
-        listener.call(event);
+    const event = {type: 'connect', success: true}; // event deatils
+    for(let listener of _eventHandlers['connect']) {
+        //console.log('listener', {listener})
+        listener(event);
     }
 }
 
@@ -45,14 +52,14 @@ const connectionError = (error) => {
 }
 
 export default {
-    registerEventListener(type, eventListener) { //type is the event type string, eventListener - callback
+    addGameEventListener(type, eventListener) { //type is the event type string, eventListener - callback
         const listeners = _eventHandlers[type];
 
         if(!listeners) {
-            _eventHandlers[listeners] = [];
+            _eventHandlers[type] = [];
         }
 
-        _eventHandlers[listeners].push(eventListener);
+        _eventHandlers[type].push(eventListener);
     },
     connect(username, password) {
         _isConnected = false;
@@ -60,27 +67,20 @@ export default {
         _stompClient = WebStompClient.over(_socket);
         _stompClient.connect({username, password}, connectionSuccess, connectionError);
     },
-
     async disconnect() {
         _isConnected = false;
     },
-
     sendMessage(msg) {
         let type = msg.type;
-        let body = msg.body;
         //const { user, channel, body} = message;
-        console.log("Sending message:" + body);
         if (_stompClient && _isConnected) {
-          _stompClient.send("/app/chat", body, {});
-        }
-        switch(type){
-            case "Party": _stompClient.send("/app/chat", body, {}); break;
-            case "Private": _stompClient.send("/app/chat", body, {}); break;
-            case "Roll": _stompClient.send("/app/chat", body, {}); break;
-        }
-        //some code to send over the "/chat" url?
-    },
 
+            switch(type){
+                case "party": _stompClient.send("/app/chat", msg, {}); break;
+                case "private": _stompClient.send("/app/messages", msg, {}); break;
+            }
+        }
+    },
     get isConnected() {
         return _isConnected;
     }

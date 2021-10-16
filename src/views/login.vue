@@ -24,28 +24,22 @@
     </v-form>
 </template>
 <script>
-import gameService from "../services/game-service"
-
-export default {
-  name: "App",
-  data() {
-    return {
-      username: "",
-      password: ""
-    };
-  },
-  methods: {
-    async login() {
-      const { username, password } = this;  //object deconstruction - E6 edition to javascript
-      //using websocket connection? Have view component call our Game Service instead
-      if(await gameService.connect(username, password)) {
-          // success
-      } else {
-          // failed
-      }
+    export default {
+    name: "App",
+    data() {
+        return {
+        username: "",
+        password: ""
+        };
+    },
+    methods: {
+        async login() {
+        const { username, password } = this;  //object deconstruction - E6 edition to javascript
+        //using websocket connection? Have view component call our Game Service instead
+        this.$store.dispatch('connect', {username, password});
+        }
     }
-  }
-};
+    };
 </script>
 <style scoped>
     .minw-200 {
