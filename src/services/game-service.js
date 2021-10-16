@@ -17,22 +17,22 @@ game.addGameEventListener('connect', (event)=>{
 });
 
 // hander to detect a succesful connected event
-game.addGameEventListener('message', (event)=>{
+game.addGameEventListener('receive-message', (event)=>{
     console.log(event);
     // what to do when we send a message
 
     // update the store with connected status
-    store.dispatch('addMessage', event.msg);
+    store.dispatch('addChatMessage', event);
 });
 //Load server side data on the character
+/*
 game.addGameEventListener('connect', (event)=>{
     console.log("Loading character data for" + event);
     // code to load and store the character data
     // update the store with connected status
-    store.dispatch('addMessage', event.msg);
+    store.dispatch('addChatMessage', event.msg);
 });
-
-
+*/
 
 export default {
     
@@ -40,7 +40,7 @@ export default {
         game.connect(username,  password);
     },
     sendMessage(msg) {
-        console.log("game-service calling game object sendMessage with message: " + msg);
+        console.log("game-service called with message: " + JSON.stringify(msg));
         game.sendMessage(msg);
     }
     

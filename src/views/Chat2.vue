@@ -52,8 +52,8 @@
         <tr>
           <div class ="chatBox">
             <div class="message"
-              v-for="msg in allMessages" :key="msg.id"
-              :class="{ 'private': msg.type === 'P',  }"
+              v-for="msg in messages" :key="msg.id"
+              :class="{ 'private': msg.type === 'private',  }"
             >
               {{msg.body}}
             </div>
@@ -72,42 +72,38 @@ export default {
     return {
       received_messages: [],
       picked:"",
-      allMessages: [{"id":0,"type":"G","body":"Initial Message"}],
-      msgCount: 0,
       send_message: null,
-      connected: false,
-      isPrivate: false,
-      userName: "",
+      userName: ""
     };
   },
   computed: {
-    messages() {
-      return this.$store.state.messages;
-    },
     isConnected(){
-      return this.$store.state.isConnected;
+      return this.$store.state.isConnected
+    },
+    messages(){
+      return this.$store.state.chatMessages
     }
   },
-
   methods: {
-    send: function() {
+    send() {
       //compose messaged based on component values
       if (this.isConnected) {
         let type = "party";
         let body =  this.send_message;
-        let msgObj = {type: type, body:body, dest:null};
-        let msg = JSON.stringify(msgObj);
+        let msg = {id:0, type: type, body:body, dest:null};
+        console.log("Sending party message:" + JSON.stringify(msg));
         this.$store.dispatch('sendMessage',{msg:msg});
-        console.log("Sending party message:" + msg);
       }
     },
     sendPrivate() {
-      console.log("Send message:" + this.send_message);
-      if (this.stompClient && this.stompClient.connected) {
-        const msg = { name: this.send_message };
-        const stringMsg = this.send_message;
-        console.log("Private: " + JSON.stringify(msg));
-        this.stompClient.send("/app/messages", stringMsg, {});
+      if (this.isConnected) {
+        let type = "private";
+        let body =  this.send_message;
+        let dest = this.userName;
+        let msgObj = {id:0, type: type, body:body, dest:dest};
+        let msg = JSON.stringify(msgObj);
+        console.log("Sending party message:" + JSON.stringify(msg));
+        this.$store.dispatch('sendMessage',{msg:msg});
       }
     },
   },

@@ -10,33 +10,29 @@ let _stompClient = null;
 const _eventHandlers = {
     'connect': [], // functions to call when a connect event occurs
     'disconnect': [],
-    'message': [],
+    'receive-message': [],
     'load': [],
 };
 
 // eslint-disable-next-line no-unused-vars
 
-const messageHandler = (messageType, body) => {
-    messageType = "";
-    body = "";
+const messageHandler = (message) => {
     // fire the 'connect' callbacks
-    const event = {
-        messageType, body
-    }; // event deatils
-    for(let listener in _eventHandlers['message']) {
+    let msg = JSON.parse(message);
+    console.log("firing message handler");
+    const event = msg;
+    for(let listener in _eventHandlers['receive-message']) {
         listener.call(event);
     }
-    return {messageType: messageType, body: body}
-
+    return msg;
 }
-
 
 const connectionSuccess = () => {
     _isConnected = true;
 
     // register ''default' message channel listeners
-    _stompClient.subscribe('/topic/chat',message => messageHandler('general', message));
-    _stompClient.subscribe('/user/queue/message', message => messageHandler('private', message));
+    _stompClient.subscribe('/topic/chat',message=>messageHandler(message));
+    _stompClient.subscribe('/user/queue/message', message => messageHandler(message));
 
     // fire the 'connect' callbacks to all registered connect listeners
     const event = {type: 'connect', success: true}; // event deatils
@@ -72,12 +68,14 @@ export default {
     },
     sendMessage(msg) {
         let type = msg.type;
+        console.log("Game client sendMessage receives message " + JSON.stringify(msg));
         //const { user, channel, body} = message;
         if (_stompClient && _isConnected) {
 
             switch(type){
-                case "party": _stompClient.send("/app/chat", msg, {}); break;
-                case "private": _stompClient.send("/app/messages", msg, {}); break;
+                case 'party': 
+                        _stompClient.send("/app/chat", msg, {}); break;
+                case 'private': _stompClient.send("/app/messages", msg, {}); break;
             }
         }
     },
@@ -85,34 +83,3 @@ export default {
         return _isConnected;
     }
 };
-/*
-            this.connected = true;
-            console.log(frame);
-              this.stompClient.subscribe('/topic/chat', (message)=> {
-                  console.log("You have recieved a chat message:" + message);
-                  this.msgCount += 1;
-                  this.isPrivate = false;
-                  const chatMessage = JSON.stringify(message.body);
-                  const newMessage = {"id":this.msgCount,"type":"G","body":chatMessage}
-                  //this.received_messages.push(chatMessage);
-                  this.allMessages.push(newMessage);
-              });
-              this.stompClient.subscribe('/user/queue/message', (message)=> {
-                  this.msgCount += 1;
-                  this.isPrivate = true;
-                  const chatMessage = JSON.stringify(message.body);
-                  const newMessage = {"id":this.msgCount,"type":"P","body":chatMessage}
-                  //this.received_messages.push(newMessage);
-                  this.allMessages.push(newMessage);
-              });
-            //this.stompClient.subscribe("/topic/greetings", tick => {
-            //  console.log(tick);
-            //  this.received_messages.push(JSON.parse(tick.body).content);
-            // });
-          },
-          error => {
-            console.log(error);
-            this.connected = false;
-          }
-        
-*/

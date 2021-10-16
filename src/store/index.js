@@ -9,15 +9,16 @@ console.log(character.skills)
 export default new Vuex.Store({
   state: {
     isConnected: false,
-    messages: [],
+    chatMessages: [{id:0,type:"info",body:"Beginning of Messages"}],
     character: {}
   },
   mutations: {
     setConnected(state, isConnected) {
       state.isConnected = isConnected;
     },
-    addMessage(state, msg) {
-      state.messages = [...state.messages, msg];
+    addChatMessage(state, {msg}) {
+      msg.id = state.chatMessages.length + 1;
+      state.messages = [...state.chatMessages, msg];
     },
   },
   actions: {
@@ -27,11 +28,12 @@ export default new Vuex.Store({
     setConnected(context, isConnected) {
       context.commit('setConnected', isConnected);
     },
-    sendMessage(msg) {
+    sendMessage(context,{msg}) {
+      console.log("Store SendMessage called with message " + JSON.stringify(msg))
       gameService.sendMessage(msg);
     },
-    addMessage(context, msg) {
-      context.commit('addMessage', msg);
+    addChatMessage(context, {msg}) {
+      context.commit('addChatMessage', msg);
     }
   },
   modules: {},
