@@ -52,7 +52,7 @@
         <tr>
           <div class ="chatBox">
             <div class="message"
-              v-for="msg in messages" :key="msg.id"
+              v-for="msg in chatMessages" :key="msg.id"
               :class="{ 'private': msg.type === 'private',  }"
             >
               {{msg.body}}
@@ -80,7 +80,7 @@ export default {
     isConnected(){
       return this.$store.state.isConnected
     },
-    messages(){
+    chatMessages(){
       return this.$store.state.chatMessages
     }
   },
@@ -92,18 +92,18 @@ export default {
         let body =  this.send_message;
         let msg = {id:0, type: type, body:body, dest:null};
         console.log("Sending party message:" + JSON.stringify(msg));
-        this.$store.dispatch('sendMessage',{msg:msg});
+        this.$store.dispatch('sendMessage', msg);
       }
     },
     sendPrivate() {
       if (this.isConnected) {
         let type = "private";
         let body =  this.send_message;
-        let dest = this.userName;
+        let dest = [this.userName];
         let msgObj = {id:0, type: type, body:body, dest:dest};
         let msg = JSON.stringify(msgObj);
         console.log("Sending party message:" + JSON.stringify(msg));
-        this.$store.dispatch('sendMessage',{msg:msg});
+        this.$store.dispatch('sendMessage',msg);
       }
     },
   },
