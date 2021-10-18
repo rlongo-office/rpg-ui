@@ -11,7 +11,8 @@ export default new Vuex.Store({
   state: {
     isConnected: false,
     chatMessages: [{id:0,type:"info",body:"Beginning of Messages"}],
-    character: {}
+    character: {},
+    maps:[]
   },
   mutations: {
     setConnected(state, isConnected) {
