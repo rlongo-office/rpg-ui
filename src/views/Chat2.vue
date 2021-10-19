@@ -100,9 +100,8 @@ export default {
         let type = "private";
         let body =  this.send_message;
         let dest = [this.userName];
-        let msgObj = {id:0, type: type, body:body, dest:dest};
-        let msg = JSON.stringify(msgObj);
-        console.log("Sending party message:" + JSON.stringify(msg));
+        let msg = {id:0, type: type, body:body, dest:dest};
+        console.log("Sending private message:" + JSON.stringify(msg));
         this.$store.dispatch('sendMessage',msg);
       }
     },

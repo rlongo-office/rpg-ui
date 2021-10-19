@@ -1,0 +1,46 @@
+<mxfile host="65bd71144e">
+    <diagram id="3hjpIPCQPB07Ad82if5d" name="Page-1">
+        <mxGraphModel dx="1895" dy="414" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="11" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="20" y="150" width="700" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="2" value="login" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+                    <mxGeometry x="40" y="190" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="Vuex Store" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+                    <mxGeometry x="200" y="30" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="Game Service" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+                    <mxGeometry x="80" y="30" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="character" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+                    <mxGeometry x="180" y="190" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="Game Client" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+                    <mxGeometry x="-40" y="30" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="map" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+                    <mxGeometry x="290" y="190" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="chat" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+                    <mxGeometry x="400" y="190" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="lore" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+                    <mxGeometry x="620" y="190" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="inventory" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+                    <mxGeometry x="510" y="190" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" value="" style="endArrow=none;html=1;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="150" y="270" as="sourcePoint"/>
+                        <mxPoint x="150" y="190" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

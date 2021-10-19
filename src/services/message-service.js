@@ -8,7 +8,6 @@ let _socket = null;
 let _stompClient = null;
 
 export default {
-    
     connect(username, password) {
         _socket = new SockJS("http://localhost:8090/game-app");
         _stompClient = WebStompClient.over(_socket);
@@ -26,8 +25,10 @@ export default {
                     store.dispatch('addChatMessage', chatMessage);
                 });
                 _stompClient.subscribe('/user/queue/message', (message)=> {
-                    console.log("Callback - chat message received:" + message);
-                    const chatMessage = JSON.parse(message);
+                    console.log("Callback - private chat message received");
+                    console.log(message.body);
+                    const chatMessage = JSON.parse(message.body);
+                    console.log(chatMessage.body);
                     store.dispatch('addChatMessage', chatMessage);
                 });
             },
