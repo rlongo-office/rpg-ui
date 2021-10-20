@@ -38,6 +38,11 @@
                 type="submit"
                 @click.prevent="sendPrivate"
               >Private</v-btn>
+              <v-btn
+                id="getCharacter"
+                type="submit"
+                @click.prevent="getCharacter"
+              >Private</v-btn>
               <input type="radio" id="chat" value="chat" v-model="picked">
               <label for="chat"> Chat </label>
               <input type="radio" id="roll" value="roll" v-model="picked">
@@ -55,7 +60,7 @@
               v-for="msg in chatMessages" :key="msg.id"
               :class="{ 'private': msg.type === 'private',  }"
             >
-              {{msg.body}}
+              {{msg.data}}
             </div>
           </div>
         </tr>
@@ -90,7 +95,7 @@ export default {
       if (this.isConnected) {
         let type = "party";
         let body =  this.send_message;
-        let msg = {id:0, type: type, body:body, dest:null};
+        let msg = {id:0, type: type, data:body, dest:null};
         console.log("Sending party message:" + JSON.stringify(msg));
         this.$store.dispatch('sendMessage', msg);
       }
@@ -100,11 +105,21 @@ export default {
         let type = "private";
         let body =  this.send_message;
         let dest = [this.userName];
-        let msg = {id:0, type: type, body:body, dest:dest};
+        let msg = {id:0, type: type, data:body, dest:dest};
         console.log("Sending private message:" + JSON.stringify(msg));
         this.$store.dispatch('sendMessage',msg);
       }
     },
+        getCharacter() {
+      if (this.isConnected) {
+        let type = "character";
+        let body =  "Retrieve my character please";
+        let dest = [this.userName];
+        let msg = {id:0, type: type, data:body, dest:dest};
+        console.log("Sending character message:" + JSON.stringify(msg));
+        this.$store.dispatch('sendMessage',msg);
+      }
+    }
   },
   mounted() {
     // this.connect();

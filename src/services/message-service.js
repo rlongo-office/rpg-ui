@@ -7,6 +7,23 @@ let _isConnected = false;
 let _socket = null;
 let _stompClient = null;
 
+const messageHandler = (message) => {
+  // fire the 'connect' callbacks
+  const gameMessage = JSON.parse(message.body);
+  let type = gameMessage.type;
+  console.log("message-service:message callback for type :" + type);
+  switch(type){
+    case 'party': 
+    case 'private':
+        store.dispatch('addChatMessage', gameMessage); break;
+    case 'character':
+        store.dispatch('loadCharacter',gameMessage); break;
+    case 'image':
+    case 'action':
+    case 'lore': break;
+}
+}
+
 export default {
     connect(username, password) {
         _socket = new SockJS("http://localhost:8090/game-app");
@@ -17,20 +34,8 @@ export default {
                 console.log(frame);
                 _isConnected = true;
                 store.dispatch('setConnected', true);
-                _stompClient.subscribe('/topic/chat', (message)=> {
-                    console.log("Callback - chat message received");
-                    console.log(message.body);
-                    const chatMessage = JSON.parse(message.body);
-                    console.log(chatMessage.body);
-                    store.dispatch('addChatMessage', chatMessage);
-                });
-                _stompClient.subscribe('/user/queue/message', (message)=> {
-                    console.log("Callback - private chat message received");
-                    console.log(message.body);
-                    const chatMessage = JSON.parse(message.body);
-                    console.log(chatMessage.body);
-                    store.dispatch('addChatMessage', chatMessage);
-                });
+                _stompClient.subscribe('/topic/chat', message=>messageHandler(message));
+                _stompClient.subscribe('/user/queue/message', message=>messageHandler(message));
             },
             error => {
             console.log(error);
@@ -49,7 +54,9 @@ export default {
                 case 'party': 
                         _stompClient.send("/app/chat", msgString, {}); break;
                 case 'private':
-                         _stompClient.send("/app/messages", msgString, {}); break;
+                        _stompClient.send("/app/messages", msgString, {}); break;
+                case 'character':
+                        _stompClient.send("/app/messages", msgString, {}); break;
             }
         }
     }

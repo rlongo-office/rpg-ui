@@ -12,8 +12,9 @@
   </v-app>
 </template>
 <script>
-  import AppNavigation from "./components/AppNavigation.vue";
+  import AppNavigation from "./components/AppNavigation.vue"
   import LoginView from "./views/login.vue"
+
   export default {
     name: 'App',
     data(){

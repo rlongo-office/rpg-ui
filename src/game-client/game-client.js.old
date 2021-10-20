@@ -18,8 +18,8 @@ const _eventHandlers = {
 
 const messageHandler = (message) => {
     // fire the 'connect' callbacks
-    let msg = JSON.parse(message.body);
-    console.log("game-client:message callback for received message");
+    let msg = JSON.parse(message);
+    console.log("game-client:message handler");
     const event = msg;
     for(let listener in _eventHandlers['receive-message']) {
         listener.call(event);
@@ -61,7 +61,7 @@ export default {
         _isConnected = false;
         _socket = new SockJS("http://localhost:8090/game-app");
         _stompClient = WebStompClient.over(_socket);
-        _stompClient.connect({username, password}, frame=>connectionSuccess(frame), connectionError);
+        _stompClient.connect({username, password}, connectionSuccess, connectionError);
     },
     async disconnect() {
         _isConnected = false;

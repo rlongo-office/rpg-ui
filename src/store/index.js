@@ -10,9 +10,15 @@ console.log(character.skills)
 export default new Vuex.Store({
   state: {
     isConnected: false,
-    chatMessages: [{id:0,type:"info",body:"Beginning of Messages"}],
-    character: {},
-    maps:[]
+    chatMessages: [{id:0,type:"info",data:"Beginning of Messages"}],
+    character: {name:"",race:{},dieties:[]},
+    images:[]
+  },
+  getters: {
+      character: (state)=> {return state.character},
+      race: (state)=> {return state.character.race},
+      diety: (state)=> {return state.character.dieties},
+      name: (state)=> {return state.character.name}
   },
   mutations: {
     setConnected(state, isConnected) {
@@ -22,6 +28,10 @@ export default new Vuex.Store({
       msg.id = state.chatMessages.length + 1;
       state.chatMessages = [...state.chatMessages, msg];
     },
+    SET_CHARACTER(state, msg) {
+      state.character = JSON.parse(msg.data);
+      console.log("Character data has been set as " + JSON.stringify(state.character));
+    }
   },
   actions: {
     connect(context, {username, password}) {
@@ -37,6 +47,10 @@ export default new Vuex.Store({
     addChatMessage(context, msg) {
       console.log("Store Action addChatMessage called with: " + JSON.stringify(msg))
       context.commit('ADD_CHAT_MESSAGE', msg);
+    },
+    loadCharacter(context, msg) {
+      console.log("Store Action loadCharacter called with: " + JSON.stringify(msg))
+      context.commit('SET_CHARACTER', msg);
     }
   },
   modules: {},
