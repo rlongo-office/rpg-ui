@@ -6,47 +6,72 @@
        "name": "Rollo",
        "player": "Russell Longo",
        "gender": "male",
+       "age":{"raw":30,"adj":30},
        "race": {
           "Elf": 0.5,
           "Human":0.5
         },
        "alignment": "Neutral Good",
-       "size": {
-          "name": "Medium",
-          "space": {
-             "text": "5'",
-             "value": 5
-          },
-          "reach": {
-             "text": "5'",
-             "value": 5
-          }
-       },
-       "deity": {
-          "name": "Eldath"
-       },
-       "classes": {
-          "level": "1",
-          "summary": "Wizard 1",
-          "summaryabbr": "Wiz 1",
-          "class": {
-             "name": "Wizard",
-             "level": "1",
-             "spells": "Spellbook",
-             "casterlevel": "1",
-             "spellattack": "+5",
-             "spellsavedc": "13",
-             "castersource": "Arcane",
-             "spellability": "Intelligence",
-             "casterlevelprogression": "normal",
-             "classhitdice": {
-                "text": "1d6",
-                "count": "1",
-                "sides": "6"
-             }
-          }
-       },
-       "factions": [],
+       "hair": "brown",
+       "eyes": "gray",
+       "skin": "pale",
+       "height":{"raw":70,"adj":70},
+       "weight":{"raw":165,"adj":165},
+       "size":{"raw":5,"adj":5},
+       "reach":5,
+       "hitpoint":{"raw":6,"adj":6},
+       "damage":0,
+       "deity": ["Eldath"],
+       "experience":{"raw":5,"adj":5},
+       "classes":[
+                        {
+                            "level":1,
+                            "name":"Wizard",
+                            "spells":"Spellbook",
+                            "castLevel":1,
+                            "spellAttack":5,
+                            "SpellSave":13,
+                            "castSource":"Arcane",
+                            "spellAbility":"Intelligence",
+                            "classHitDice":"1d6"
+                        }
+        ],
+        "senses": [],
+        "auras": [],
+        "purse": {
+            "platinum":0,
+            "gold":110,
+            "electrum":0,
+            "silver":20,
+            "copper":0
+        },
+        "languages":[
+            {
+                "name":"Elvish",
+                "type":"language",
+                "stat": {"raw":0,"adj":0}
+            },
+            {
+                "name":"Common",
+                "type":"language",
+                "stat": {"raw":0,"adj":0}
+            },
+            {
+                "name":"Dwarvish",
+                "type":"language",
+                "stat": {"raw":0,"adj":0}
+            },
+            {
+                "name":"Sylvan",
+                "type":"language",
+                "stat": {"raw":0,"adj":0}
+            },
+            {
+                "name":"Goblin",
+                "type":"language",
+                "stat": {"raw":0,"adj":0}
+            }
+        ],
        "types": {
           "type": {
              "name": "Humanoid",
@@ -79,8 +104,6 @@
              }
           ]
        },
-       "senses": [],
-       "auras": [],
        "health": {
           "hitdice": [
              "1d6+1",
@@ -98,72 +121,6 @@
        "xp": {
           "total": 0
        },
-       "money": {
-          "total": "114gp,6sp,6cp",
-          "valuables": [],
-          "coins": [
-             {
-                "name": "Platinum pieces",
-                "abbreviation": "pp",
-                "count": 0
-             },
-             {
-                "name": "Gold pieces",
-                "abbreviation": "gp",
-                "count": 114
-             },
-             {
-                "name": "Electrum pieces",
-                "abbreviation": "ep",
-                "count": 0
-             },
-             {
-                "name": "Silver pieces",
-                "abbreviation": "sp",
-                "count": 6
-             },
-             {
-                "name": "Copper pieces",
-                "abbreviation": "cp",
-                "count": 6
-             }
-          ]
-       },
-       "personal": {
-          "gender": "male",
-          "age": "39",
-          "hair": "brown",
-          "eyes": "gray",
-          "skin": "pale",
-          "description": [],
-          "charheight": {
-             "text": "5' 10\"",
-             "value": "70"
-          },
-          "charweight": {
-             "text": "115lb.",
-             "value": 115
-          }
-       },
-       "languages": [
-          {
-             "name": "Common",
-             "useradded": "no"
-          },
-          {
-             "name": "Dwarvish"
-          },
-          {
-             "name": "Elvish",
-             "useradded": "no"
-          },
-          {
-             "name": "Goblin"
-          },
-          {
-             "name": "Sylvan"
-          }
-       ],
        "toolproficiencies": {
           "text": ""
        },
