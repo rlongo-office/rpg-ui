@@ -21,6 +21,20 @@
       return {
       };
     },
+    watch: {
+    isConnected: function (status) {
+      if(status){
+                if (status){
+          let type = "character";
+          let body =  "character load";
+          let dest = [this.userName];
+          let msg = {id:0, type: type, data:body, dest:dest};
+          console.log("Loading character from App.vue:");
+          this.$store.dispatch('sendMessage',msg);
+        }
+      }
+    }
+  },
     computed: {
       isConnected() {
         return this.$store.state.isConnected;
