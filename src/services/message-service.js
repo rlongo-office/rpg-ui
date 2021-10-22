@@ -43,6 +43,7 @@ export default {
             }
         );        
     },
+
     sendMessage(msg) {
         let type = msg.type;
         let msgString = JSON.stringify(msg);

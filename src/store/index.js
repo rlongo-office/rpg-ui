@@ -1,6 +1,8 @@
 import Vue from "vue";
-import Vuex from "vuex";
+// eslint-disable-next-line no-unused-vars
+import Vuex, { Store } from "vuex";
 
+Vue.config.devtools = true;
 Vue.use(Vuex);
 import character from "../data/character.json"
 //import gameService from "../services/game-service";
@@ -13,12 +15,6 @@ export default new Vuex.Store({
     chatMessages: [{id:0,type:"info",data:"Beginning of Messages"}],
     character: {name:"",race:{},dieties:[]},
     images:[]
-  },
-  getters: {
-      character: (state)=> {return state.character},
-      race: (state)=> {return state.character.race},
-      diety: (state)=> {return state.character.dieties},
-      name: (state)=> {return state.character.name}
   },
   mutations: {
     setConnected(state, isConnected) {
@@ -41,15 +37,12 @@ export default new Vuex.Store({
       context.commit('setConnected', isConnected);
     },
     sendMessage(context,msg) {
-      console.log("Store SendMessage called with message " + JSON.stringify(msg))
       messageService.sendMessage(msg);
     },
     addChatMessage(context, msg) {
-      console.log("Store Action addChatMessage called with: " + JSON.stringify(msg))
       context.commit('ADD_CHAT_MESSAGE', msg);
     },
     loadCharacter(context, msg) {
-      console.log("Store Action loadCharacter called with: " + JSON.stringify(msg))
       context.commit('SET_CHARACTER', msg);
     }
   },

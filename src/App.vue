@@ -28,7 +28,6 @@
     },
     components: {AppNavigation, LoginView},
     created() {
-      this.isConnected = true;
     }
   }
 </script>

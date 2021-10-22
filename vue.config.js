@@ -1,8 +1,8 @@
 module.exports = {
     configureWebpack: {
         devtool: 'source-map'
-    },
-    devServer: {
-        port: 8080
     }
+    //devServer: {
+    //    port: 8080
+    //}
 }

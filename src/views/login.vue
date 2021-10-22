@@ -36,7 +36,7 @@
         async login() {
             const { username, password } = this;  //object deconstruction - E6 edition to javascript
             //using websocket connection? Have view component call our Game Service instead
-            this.$store.dispatch('connect', {username, password}); 
+            this.$store.dispatch('connect', {username, password});
         }
     }
     };

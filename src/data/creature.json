@@ -72,6 +72,9 @@
                 "stat": {"raw":0,"adj":0}
             }
         ],
+        "toolProfs":[
+            
+        ],
        "types": {
           "type": {
              "name": "Humanoid",

@@ -113,7 +113,7 @@ export default {
         getCharacter() {
       if (this.isConnected) {
         let type = "character";
-        let body =  "Retrieve my character please";
+        let body =  "character load";
         let dest = [this.userName];
         let msg = {id:0, type: type, data:body, dest:dest};
         console.log("Sending character message:" + JSON.stringify(msg));

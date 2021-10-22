@@ -25,7 +25,8 @@
   },
   computed: {
       character () {
-        return this.$store.getters.character
+        const character = this.$store.state.character;
+        return character;
       }
   }
  }
