@@ -19,16 +19,13 @@ export default {
       return this.$store.state.isConnected
     },
   },
-  created: ()=>{
-      if (this.isConnected){
-          let user = "Bob"
-          let type = "character";
-          let body =  "character load";
-          let dest = [user];
-          let msg = {id:0, type: type, data:body, dest:dest};
-          console.log("Loading character from character view");
-          this.$store.dispatch('sendMessage',msg);
-      }
-  }
+    async created() {
+            let type = "character";
+            let data  =  "character load";
+            let dest = ["Bob"];
+            let msg = {id:0, type: type, data:data, dest:dest};
+            console.log("Loading character from character view");
+            this.$store.dispatch('sendMessage',msg);
+    },
 }
 </script>
