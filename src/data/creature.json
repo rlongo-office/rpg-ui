@@ -390,6 +390,7 @@
                {
                   "name": "Acid Splash",
                   "type": "cantrip",
+                  "level": 0,
                   "castTime": "1 action",
                   "range": 60,
                   "duration": "Instantaneous",
@@ -407,6 +408,7 @@
                {
                   "name": "Fire Bolt",
                   "type": "cantrip",
+                  "level": 0,
                   "castTime": "1 action",
                   "range": 120,
                   "duration": "instant",
@@ -422,6 +424,7 @@
                {
                   "name": "Light",
                   "type": "cantrip",
+                  "level": 0,
                   "castTime": "1 action",
                   "range": 0,
                   "duration": "1 hour",
@@ -429,6 +432,7 @@
                   "casterLevel": 1,
                   "castsLeft": 1,
                   "unlimited": true,
+                  "traits": [],
                   "description": "You touch one object that is no larger than 10 feet in any dimension. Until the spell ends, the object sheds bright light in a 20 foot radius and dim light for an additional 20 feet. The light can be colored as you like. Completely covering the object with something opaque blocks the light. The spell ends if you cast it again or dismiss it as an action.\nIf you target an object held or worn by a hostile creature, that creature must succeed on a Dexterity saving throw to avoid the spell.",
                   "components": [
                      "Verbal",
@@ -440,74 +444,77 @@
                   "name": "Detect Magic",
                   "type": "spell",
                   "level": 1,
-                  "casttime": "1 action",
+                  "castTime": "1 action",
                   "range": -1,
                   "duration": "Concentration, up to 10 minutes",
                   "dc": 13,
-                  "casterlevel": 1,
-                  "componenttext": "Verbal, Somatic",
-                  "schooltext": "Divination",
-                  "castsleft": "1",
+                  "casterLevel": 1,
+                  "castsLeft": 1,
+                  "unlimited": false,
+                  "traits": [],
                   "description": "For the duration, you sense the presence of magic within 30 feet of you. If you sense magic in this way, you can use your action to see a faint aura around any visible creature or object in the area that bears magic, and you learn its school of magic, if any.\nThe spell can penetrate most barriers, but it is blocked by 1 foot of stone, 1 inch of common metal, a thin sheet of lead, or 3 feet of wood or dirt.",
                   "components": [
                      "Verbal",
                      "Somatic"
                   ],
-                  "spellschool": "Divination"
+                  "schools": ["Divination"]
                },
                {
                   "name": "Fog Cloud",
-                  "level": "1st",
-                  "casttime": "1 action",
-                  "range": "120 feet",
+                  "type": "spell",
+                  "level": 1,
+                  "castTime": "1 action",
+                  "range": 120,
                   "duration": "Concentration, up to 1 hour",
-                  "dc": "13",
-                  "casterlevel": "1",
-                  "componenttext": "Verbal, Somatic",
-                  "schooltext": "Conjuration",
-                  "castsleft": "1",
+                  "dc": 13,
+                  "casterLevel": 1,
+                  "castsLeft": 1,
+                  "unlimited": false,
+                  "traits": [],
                   "description": "You create a 20 foot radius sphere of fog centered on a point within range. The sphere spreads around corners, and its area is heavily obscured. It lasts for the duration or until a wind of moderate or greater speed (at least 10 miles per hour) disperses it.\nAt Higher Levels. When you cast this spell using a spell slot of 2nd level or higher, the radius of the fog increases by 20 feet for each slot level above 1st.",
-                  "spellcomp": [
+                  "components": [
                      "Verbal",
                      "Somatic"
                   ],
-                  "spellschool": "Conjuration"
+                  "schools": ["Conjuration"]
                },
                {
                   "name": "Magic Missile",
-                  "level": "1st",
-                  "casttime": "1 action",
-                  "range": "120 feet",
+                  "type": "spell",
+                  "level": 1,
+                  "castTime": "1 action",
+                  "range": 120,
                   "duration": "Instantaneous",
-                  "dc": "13",
-                  "casterlevel": "1",
-                  "componenttext": "Verbal, Somatic",
-                  "schooltext": "Evocation",
-                  "castsleft": "1",
+                  "dc": 13,
+                  "casterLevel": 1,
+                  "castsLeft": 1,
+                  "unlimited": false,
+                  "traits": [],
                   "description": "You create three glowing darts of magical force. Each dart hits a creature of your choice that you can see within range. A dart deals 1d4 + 1 force damage to its target. The darts all strike simultaneously, and you can direct them to hit one creature or several.\nAt Higher Levels. When you cast this spell using a spell slot of 2nd level or higher, the spell creates one more dart for each slot level above 1st.",
-                  "spellcomp": [
+                  "components": [
                      "Verbal",
                      "Somatic"
                   ],
-                  "spellschool": "Evocation"
+                  "schools":["Evocation"]
                },
                {
                   "name": "Shield",
-                  "level": "1st",
-                  "casttime": "1 reaction",
-                  "range": "Self",
+                  "type": "spell",
+                  "level": 1,
+                  "castTime": "1 reaction",
+                  "range": -1,
                   "duration": "1 round",
-                  "dc": "13",
-                  "casterlevel": "1",
-                  "componenttext": "Verbal, Somatic",
-                  "schooltext": "Abjuration",
-                  "castsleft": "1",
+                  "dc": 13,
+                  "casterLevel": 1,
+                  "castsLeft": 1,
+                  "unlimited": false,
+                  "traits": [],
                   "description": "An invisible barrier of magical force appears and protects you. Until the start of your next turn, you have a +5 bonus to AC, including against the triggering attack, and you take no damage from magic missile.",
-                  "spellcomp": [
+                  "components": [
                      "Verbal",
                      "Somatic"
                   ],
-                  "spellschool": "Abjuration"
+                  "schools":["Abjuration"]
                }
       ]
    }
