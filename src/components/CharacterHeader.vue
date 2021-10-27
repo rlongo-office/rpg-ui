@@ -2,15 +2,38 @@
   <div class="CharacterHeader">
       <table id="CharacterHeaderTable">
         <tr>
-          {{character.name}}
+          <td><b>Name: </b>{{character.name}}</td>
+          <td><b>Age: </b> {{character.age.adj}}</td>
+          <td>Hitpoints: {{character.hitpoint.raw}}/{{character.hitpoint.adj}}</td>
+          <td>Experience: {{character.experience.adj}}</td>
+          <td v-for="(val,index) in character.classes" v-bind:key="index">{{val.name}}:{{val.level}}</td>
+          <td><b>Player: </b>{{character.player.name}}</td>
         </tr>
         <tr >
+          <td><b>Alignment: </b>{{character.alignment}}</td>
+          <td><b>Race:</b></td>
+          <td v-for="(value,name) in character.race" v-bind:key="name">{{name}} : {{value}}</td>
+          <td><b>Height: </b>{{character.height.adj}}</td>
+          <td><b>Weight: </b>{{character.weight.adj}}</td>
+          <td><b>Size: </b>{{character.size.adj}}</td>
+          <td><b>Hair: </b>{{character.hair}}</td>
+          <td><b>Eyes: </b>{{character.eyes}}</td>
+          <td><b>Skin: </b>{{character.skin}}</td>
         </tr>
-        <tr v-for="(value,name) in character.race" v-bind:key="name">
-          <td>{{name}}</td>
-          <td>{{value}}</td>
+        <tr>
+          <td><b>Languages:</b></td>
+          <td v-for="(val,index) in character.languages" v-bind:key="index">{{val.name}}</td>
         </tr>
-        <tr v-for="name in character.dieties" v-bind:key="name">
+        <tr>
+          <td><b>Purse:</b></td>
+          <td><b>plat: </b>{{character.purse.platinum}}</td>
+          <td><b>gold: </b>{{character.purse.gold}}</td>
+          <td><b>elec: </b>{{character.purse.electrum}}</td>
+          <td><b>silv: </b>{{character.purse.silver}}</td>
+          <td><b>copp: </b>{{character.purse.copper}}</td>
+        </tr>
+        <tr v-for="name in character.diety" v-bind:key="name">
+          <td><b>Dieties</b></td>
           <td>{{name}}</td>
         </tr>
       </table>
@@ -32,3 +55,11 @@
  }
 
 </script>
+<style scoped>
+  table {
+    font-size: 10pt;
+  }
+  td {
+    padding: 0 3px;
+  }
+</style>
