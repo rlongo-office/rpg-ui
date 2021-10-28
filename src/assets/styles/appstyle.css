@@ -11,12 +11,12 @@
 
 /* Stats button press */
 .stat {
-  border-color: #04AA6D;
-  color: teal;
+  border-color: darkblue;
+  color: darkblue;
 }
 
 .stat:hover {
-  background-color: #04AA6D;
+  background-color: darkblue;
   color: white;
 }
 
@@ -31,4 +31,10 @@
 
 .loginbtn {
     padding: 20px;
+}
+
+.sectionHeader{
+  background-color: #887c7f;
+  color: white;
+  border-color: rgb(255, 255, 255);
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="CharacterHeader">
-      <table id="CharacterHeaderTable">
+      <table id="CharacterHeaderTable" class="sectionHeader">
         <tr>
           <td><b>Name: </b>{{character.name}}</td>
           <td><b>Age: </b> {{character.age.adj}}</td>
@@ -36,12 +36,20 @@
           <td><b>Dieties</b></td>
           <td>{{name}}</td>
         </tr>
+        <tr>
+          <div width="100%">
+            <SkillTable></SkillTable>
+          </div>
+        </tr>
       </table>
+
   </div>
 </template>
 
 <script>
+import SkillTable from '../components/SkillTable.vue';
  export default {
+  components: { SkillTable },
   data (){
       return {
       }
@@ -59,7 +67,10 @@
   table {
     font-size: 10pt;
   }
-  td {
+  td,th {
+    border-style: solid;
+    border-color: darkgray;
     padding: 0 3px;
+    font-size: 18px;
   }
 </style>

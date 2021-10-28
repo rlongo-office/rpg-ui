@@ -1,15 +1,18 @@
 <template>
   <div class="SkillTable">
-      <table id="SkillTable">
-        <tr>
-          <th>Column 1</th>
-          <th>Column 2</th>
+      <table id="SkillTable" class="sectionHeader">
+        <tr class="sectionHeader">
+          <th>Name</th>
+          <th>Pass</th>
+          <th>Base</th>
+          <th>Adj</th>
         </tr>
-        <tr v-for="skilz in character.skills" :key="skilz.name">
-          <td>{{skilz.name}}</td>
-          <td>{{skilz.value}}</td>
+        <tr v-for="(val, index) in character.skills" :key="index">
+          <td>{{val.name}}</td>
+          <td>{{val.passive}}</td>
+          <td>{{val.stat.raw}}</td>
           <td>
-            <button class="mybtn stat">{{skilz.value}}</button>
+            <button class="mybtn stat">{{val.stat.adj}}</button>
           </td>
         </tr>
       </table>
@@ -20,21 +23,20 @@
  export default {
   data (){
       return {
-        /*skills:[
-        {name: "Acrobatics",value: 4},
-        {name: "Perception",value: 2},
-        {name: "Language:Orcish",value: 5}         
-        ]*/
       }
   },
   computed: {
-      skills () {
-        return this.$store.state.skills
-      },
       character () {
-        return this.$store.state.character.character
+        return this.$store.state.character
       }
   }
  }
-
 </script>
+<style scoped>
+  td,th {
+    border-style: solid;
+    border-color: darkgray;
+    padding: 0 3px;
+    font-size: 18px;
+  }
+</style>
