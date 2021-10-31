@@ -12,7 +12,11 @@
           <td>{{val.passive}}</td>
           <td>{{val.stat.raw}}</td>
           <td>
-            <button class="mybtn stat">{{val.stat.adj}}</button>
+            <button 
+              class="mybtn stat"
+              v-on:click="rollSkillDice"
+              :data-value="[val.name, val.stat.adj]"
+            >{{val.stat.adj}}</button>
           </td>
         </tr>
       </table>
@@ -29,6 +33,14 @@
       character () {
         return this.$store.state.character
       }
+  },
+  methods: {
+    rollSkillDice(event) {
+      let btnValue = event.target.dataset.value.split(',');
+      let msgBody = "Roll Action: " + btnValue[0] + ":" + btnValue[1]
+      //sending a die roll message
+      console.log(msgBody)
+    }
   }
  }
 </script>
@@ -37,6 +49,6 @@
     border-style: solid;
     border-color: darkgray;
     padding: 0 3px;
-    font-size: 18px;
+    font-size: 20px;
   }
 </style>

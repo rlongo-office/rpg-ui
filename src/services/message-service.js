@@ -19,29 +19,34 @@ const messageHandler = (message) => {
     case 'character':
         store.dispatch('loadCharacter',gameMessage); break;
     case 'image':
+        store.dispatch('loadImage',gameMessage); break;
     case 'action':
     case 'lore': break;
 }
 }
 
 export default {
-    connect(username, password) {
-        _socket = new SockJS("http://localhost:8090/game-app");
-        _stompClient = WebStompClient.over(_socket);
-        _stompClient.connect(
-            {username, password},
-            frame =>{
-                console.log(frame);
-                _isConnected = true;
-                store.dispatch('setConnected', true);
-                _stompClient.subscribe('/topic/chat', message=>messageHandler(message));
-                _stompClient.subscribe('/user/queue/message', message=>messageHandler(message));
-            },
-            error => {
-            console.log(error);
-            _isConnected = false;
-            }
-        );        
+    async connect(username, password) {
+        return new Promise((resolve, reject) =>{
+          _socket = new SockJS("http://localhost:8095/game-app");
+          _stompClient = WebStompClient.over(_socket);
+          _stompClient.connect(
+              {username, password},
+              frame =>{
+                  console.log(frame);
+                  _isConnected = true;
+                  store.dispatch('setConnected', true);
+                  _stompClient.subscribe('/topic/chat', message=>messageHandler(message));
+                  _stompClient.subscribe('/user/queue/message', message=>messageHandler(message));
+                  resolve();
+              },
+              error => {
+                console.log(error);
+                _isConnected = false;
+                reject();
+              }
+          );    
+        });    
     },
 
     sendMessage(msg) {
@@ -58,6 +63,8 @@ export default {
                         _stompClient.send("/app/messages", msgString, {}); break;
                 case 'character':
                         _stompClient.send("/app/messages", msgString, {}); break;
+                case 'image':
+                          _stompClient.send("/app/messages", msgString, {}); break;
             }
         }
     }

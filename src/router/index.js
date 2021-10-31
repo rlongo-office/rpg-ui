@@ -6,10 +6,10 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/chat",
+    path: "/character",
     name: "Character",
     component: () =>
-    import(/* webpackChunkName: "about" */ "../views/Chat.vue"),
+    import(/* webpackChunkName: "about" */ "../views/Character.vue"),
   },
   {
     path: "/inventory",

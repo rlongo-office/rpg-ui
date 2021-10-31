@@ -1,6 +1,6 @@
   <template>
   <v-bottom-navigation app background-color=#7e8499>
-      <v-btn to="/chat" class="white--text">
+      <v-btn to="/character" class="white--text">
         <span>Character</span>
         <v-icon color=#ffffff>mdi-account</v-icon>
       </v-btn>

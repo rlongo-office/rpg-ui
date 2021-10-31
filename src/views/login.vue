@@ -38,11 +38,7 @@
             //using websocket connection? Have view component call our Game Service instead
 
             // This component just got created. Lets fetch some data here using an action
-            this.$store.dispatch('connect', {username, password}).then(response => {
-                console.log("Successful response from Action:connect in Store with " + response)
-            }, error => {
-                console.error("Connection failed for Action:connect with " + error)
-            })
+            this.$store.dispatch('connect', {username, password})
         }
         
     }

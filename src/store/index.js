@@ -4,10 +4,9 @@ import Vuex, { Store } from "vuex";
 
 Vue.config.devtools = true;
 Vue.use(Vuex);
-import character from "../data/character.json"
+
 //import gameService from "../services/game-service";
 import messageService from "../services/message-service"
-console.log(character.skills)
 
 export default new Vuex.Store({
   state: {
@@ -26,21 +25,26 @@ export default new Vuex.Store({
     },
     SET_CHARACTER(state, msg) {
       state.character = JSON.parse(msg.data);
-      console.log("Character data has been set as " + JSON.stringify(state.character));
+    },
+    SET_IMAGE(state, msg) {
+      var image = new Image();
+      image.src = "data:image/jpeg;base64," + msg.data
+      state.images = [...state.images, image];
     }
   },
   actions: {
-    connect(context, {username, password}) {
-      return new Promise((resolve, reject) => {
+    async connect(context, {username, password}) {
         // Do something here... lets say, a http call using vue-resource
-          messageService.connect(username, password).then(response => {
-            console.log("Connection successful");
-            resolve(response);  // Let the calling function know that http is done. You may send some data back
-        }, error => {
-            // http failed, let the calling function know that action did not work out
-            reject(error);
-        })
-    })
+          try {
+            await messageService.connect(username, password);
+            let msg = {id:0, type: "character", data:"character", dest:["Bob"]};
+            await context.dispatch('sendMessage',msg);
+            msg = {id:0, type: "image", data:"image", dest:["Bob"]};
+            await context.dispatch('sendMessage',msg)
+            // do the rest here
+          } catch {
+            // handle error
+          }
     },
     setConnected(context, isConnected) {
       context.commit('setConnected', isConnected);
@@ -53,6 +57,9 @@ export default new Vuex.Store({
     },
     loadCharacter(context, msg) {
       context.commit('SET_CHARACTER', msg);
+    },
+    loadImage(context, msg) {
+      context.commit('SET_IMAGE', msg);
     }
   },
   modules: {},

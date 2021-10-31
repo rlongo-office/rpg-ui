@@ -2,6 +2,11 @@
   <div class="CharacterHeader">
       <table id="CharacterHeaderTable" class="sectionHeader">
         <tr>
+          <th scope="col">Header</th>
+          <th scope="col">Header</th>
+          <th scope="col" colspan="2">Header</th>
+        </tr>
+        <tr>
           <td><b>Name: </b>{{character.name}}</td>
           <td><b>Age: </b> {{character.age.adj}}</td>
           <td>Hitpoints: {{character.hitpoint.raw}}/{{character.hitpoint.adj}}</td>
@@ -37,19 +42,14 @@
           <td>{{name}}</td>
         </tr>
         <tr>
-          <div width="100%">
-            <SkillTable></SkillTable>
-          </div>
         </tr>
       </table>
-
   </div>
 </template>
 
 <script>
-import SkillTable from '../components/SkillTable.vue';
  export default {
-  components: { SkillTable },
+  components: {  },
   data (){
       return {
       }
@@ -59,18 +59,21 @@ import SkillTable from '../components/SkillTable.vue';
         const character = this.$store.state.character;
         return character;
       }
-  }
+  },
+
  }
 
 </script>
 <style scoped>
   table {
-    font-size: 10pt;
+    font-size: 20pt;
+    max-width: 100%
   }
+
   td,th {
     border-style: solid;
-    border-color: darkgray;
+    border-color: rgb(180, 170, 170);
     padding: 0 3px;
-    font-size: 18px;
+    font-size: 20px;
   }
 </style>
