@@ -1,50 +1,37 @@
 <template>
   <div>
       <h1>MAP PAGE</h1>
-      <div 
-        v-on:mousedown="divHandleMouseDown"
-        class="mapDiv">
-        <img ref="image" :src = "loadedImage">
+      <div class="portrait">
+        <div
+          v-on:mousedown="divHandleMouseDown"
+          class="wrapper">
+            <img 
+              ref="img" 
+              :style="{ objectPosition: imgLEFT+ 'px ' + imgTOP + 'px' }"
+              :src = "img">
+        </div>
       </div>
   </div>
 </template>
 
 <script>
+     import mapImage from "c:/development/maps/testwebmap.jpg"
 export default {
   name: 'Map',
   data:()=>({
-    img: "",
-    canvas: null,
-    ctx: null,
-    canvasOffset:0,
-    offsetX:0,
-    offsetY:0,
-    canvasWidth: 0,
-    canvasHeight: 0,
-    oldMouseX:0,
-    oldMouseY:0,
-    subImgX:0,
-    subImgY:0,
-    scaledImgX:0,
-    scaledImgY:0,
-    xDiff:0,
-    yDiff:0,
-    iHeight:0,
-    iWidth:0,
-    isDragging:false,
-    isScaling:false,
-    isInBound:true,
-    touchDist:0,
-    imgScale:1,
+    img: mapImage,
+    imgTOP: 0,
+    imgLEFT: 0,
   }),
   computed: {
+ 
       images () {
         const img = this.$store.state.images
         return img
       },
       loadedImage(){
         if (this.images){
-          return this.images[0];
+          return this.img;
         } else {
           return ""
         }
@@ -54,7 +41,8 @@ export default {
   },
   watch: {
     images(){
-        //this.canvas = this.$refs.canvas
+        //this.img = this.images[0]
+        console.log("Images has loaded")
         //this.ctx = this.canvas.getContext("2d");
         //this.ctx.drawImage(this.images[0] ,0,0);
     }
@@ -62,113 +50,30 @@ export default {
   methods: {
 
     divHandleMouseDown(){
-      let imgEl = this.$refs.canvas
-      imgEl.style.left = -20;
-      imgEl.style.top = -20;
-    },
-
-    dist(e) {
-      let zw = e.touches[0].pageX - e.touches[1].pageX, zh = e.touches[0].pageY - e.touches[1].pageY;
-      return Math.sqrt(zw * zw + zh * zh);
-    },
-    handleMouseDown(e){
-        let canMouseX;
-        let canMouseY;
-        if ((e.clientX)&&(e.clientY)) {
-          canMouseX = parseInt(e.clientX-this.offsetX);
-          canMouseY = parseInt(e.clientY-this.offsetY);
-          console.log("mouseDown: "+ canMouseX + "," + canMouseY)
-          // set the drag flag
-         this.isDragging=true;
-        } else if (e.targetTouches) {
-          e.preventDefault();
-          canMouseX=parseInt(e.targetTouches[0].clientX-this.offsetX);
-          canMouseY=parseInt(e.targetTouches[0].clientY-this.offsetY);
-          if (e.touches.length > 1) {
-            //detected a pinch
-            this.touchDist = this.dist(e);
-            this.isScaling = true;
-          } else {
-            // set the drag flag
-            this.isDragging=true;
-            this.isScaling = false;
-          }
-        }
-        this.oldMouseX = canMouseX;
-        this.oldMouseY = canMouseY; 
-    },
-    handleMouseUp(e){
-        let canMouseX;
-        let canMouseY;
-        if ((e.clientX)&&(e.clientY)) {
-          canMouseX=parseInt(e.clientX-this.offsetX);
-          canMouseY=parseInt(e.clientY-this.offsetY);
-          // set the drag flag
-        } else if (e.targetTouches) {
-            e.preventDefault();
-            canMouseX=parseInt(e.targetTouches[0].clientX-this.offsetX);
-            canMouseY=parseInt(e.targetTouches[0].clientY-this.offsetY);
-          }
-        // user has removed touch or released mouse button, so clear the drag flag
-        this.isDragging = this.isScaling =false;
-        this.touchDist = 0;
-        this.oldMouseX = canMouseX;
-        this.oldMouseY = canMouseY;
-    },
-    handleMouseLeave(){
-        // user has left the canvas, so clear the drag flag
-        this.isDragging = this.isScaling =false;
-        this.touchDist = 0;
-    },
-    handleMouseMove(e){
-        let canMouseX;
-        let canMouseY;
-        console.log("mouseMove: "+ this.oldMouseX + "," + this.oldMouseY)
-        if ((e.clientX)&&(e.clientY)) {
-          canMouseX=parseInt(e.clientX-this.offsetX);
-          canMouseY=parseInt(e.clientY-this.offsetY);
-          console.log("\tmouseMove: "+ canMouseX + "," + canMouseY)
-        } else if (e.targetTouches) {
-          canMouseX=parseInt(e.targetTouches[0].clientX-this.offsetX);
-          canMouseY=parseInt(e.targetTouches[0].clientY-this.offsetY);
-          e.preventDefault();
-        }
-        //if scaling flag is set, clear the canvas and draw the image at the correct scale
-        if (this.isScaling){
-          this.imgScale = parseInt(this.dist(e)/this.touchDist);
-          if (this.imgScale < 1) this.imgScale=1; 
-        }
-        // if the drag flag is set, clear the canvas and draw the image
-        if(this.isDragging){
-            this.xDiff = this.oldMouseX-canMouseX;
-            this.yDiff = this.oldMouseY-canMouseY;
-            this.oldMouseX = canMouseX;
-            this.oldMouseY = canMouseY;
-            this.subImgX += this.xDiff;
-            this.subImgY += this.yDiff;
-            this.xDiff = this.yDiff = 0;
-            if(this.subImgX<0){this.subImgX = 0}
-            if(this.subImgX>this.iWidth-this.canvasWidth/this.imgScale) {this.subImgX = this.iWidth-this.canvasWidth/this.imgScale}
-            if(this.subImgY<0){this.subImgY = 0}
-            if(this.subImgY>this.iHeight-this.canvasHeight/this.imgScale) {this.subImgY = this.iHeight-this.canvasHeight/this.imgScale}
-            this.ctx.clearRect(0,0,this.canvasWidth,this.canvasHeight);
-            //ctx.drawImage(img,0,0,canvasWidth,canvasHeight);
-            this.scaledImgX = 800/this.imgScale;
-            this.scaledImgY = 800/this.imgScale;
-            this.ctx.drawImage(this.images[0],this.subImgX,this.subImgY,this.scaledImgX,this.scaledImgY,0,0,800*this.imgScale,800*this.imgScale);
-        }
+      //let imgEl = this.$refs.img
+      //imgEl.style.left = 100;
+      //imgEl.style.top = 100;
+      this.imgTOP +=  -5;
+      this.imgLEFT += -5;
     }
   }
 }
 </script>
 <style scoped>
-.mapImage{
-  scale: 1;
-  left: 0;
-  top: 0;
+.portrait{
+  height: 100%;
+  width: 100%;
+  position: relative;
 }
 
-.mapDiv{
-  overflow:hidden;
+.wrapper{
+    overflow:hidden;
+    height: 800px;
+    width: 800px;
+    position: relative;
+}
+
+.wrapper img{
+    position: relative;
 }
 </style>
