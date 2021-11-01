@@ -3,7 +3,13 @@
       <h1>MAP PAGE</h1>
       <div class="portrait">
         <div
-          v-on:mousedown="divHandleMouseDown"
+          v-on:mousedown="handleMouseDown"
+          v-on:mousemove="handleMouseMove"
+          v-on:mouseup="handleMouseUp"
+          v-on:mouseleave="handleMouseLeave"
+          v-on:touchstart="handleMouseDown"
+          v-on:touchmove="handleMouseMove"
+          v-on:touchend="handleMouseUp"
           class="wrapper">
             <img 
               ref="img" 
@@ -22,6 +28,7 @@ export default {
     img: mapImage,
     imgTOP: 0,
     imgLEFT: 0,
+    isDragging:false
   }),
   computed: {
  
@@ -49,13 +56,23 @@ export default {
   },
   methods: {
 
-    divHandleMouseDown(){
+    handleMouseDown(){
       //let imgEl = this.$refs.img
       //imgEl.style.left = 100;
       //imgEl.style.top = 100;
       this.imgTOP +=  -5;
       this.imgLEFT += -5;
+    },
+    handleMouseMove(){
+
+    },
+    handleMouseUp(){
+
+    },
+    handleMouseLeave(){
+
     }
+
   }
 }
 </script>
