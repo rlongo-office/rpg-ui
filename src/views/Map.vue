@@ -11,8 +11,9 @@
           v-on:touchmove="handleMouseMove"
           v-on:touchend="handleMouseUp"
           class="wrapper">
-            <img 
-              ref="img" 
+            <img
+              v-on:load="imageLoad" 
+              ref="imgEl" 
               :style="{ objectPosition: imgLEFT+ 'px ' + imgTOP + 'px' }"
               :src = "img">
         </div>
@@ -28,40 +29,38 @@ export default {
     img: mapImage,
     imgTOP: 0,
     imgLEFT: 0,
-    isDragging:false
+    isDragging:false,
+    divHeight:800,
+    divWidth:800,
+    topLimit:0,
+    leftLimit:0,
+    isLoaded: true,
+    oldMouseX:0,
+    oldMouseY:0
   }),
   computed: {
- 
-      images () {
-        const img = this.$store.state.images
-        return img
-      },
-      loadedImage(){
-        if (this.images){
-          return this.img;
-        } else {
-          return ""
-        }
-      }
-    },
-  mounted(){
-  },
-  watch: {
-    images(){
-        //this.img = this.images[0]
-        console.log("Images has loaded")
-        //this.ctx = this.canvas.getContext("2d");
-        //this.ctx.drawImage(this.images[0] ,0,0);
-    }
-  },
-  methods: {
 
+    },
+  mounted() {
+  },
+methods: {
+    
+    imageLoad(){
+      let image = this.$refs.imgEl
+      console.log(image.clientWidth + "," + image.clientHeight)
+      this.topLimit = -(image.clientHeight-this.divHeight)
+      this.leftLimit = -(image.clientWidth-this.divWidth)
+    },
     handleMouseDown(){
       //let imgEl = this.$refs.img
       //imgEl.style.left = 100;
       //imgEl.style.top = 100;
-      this.imgTOP +=  -5;
-      this.imgLEFT += -5;
+      if (this.imgTOP>this.topLimit){
+         this.imgTOP +=  -5;
+      }
+      if (this.imgLEFT>this.leftLimit){
+         this.imgLEFT +=  -5;
+      }
     },
     handleMouseMove(){
 
