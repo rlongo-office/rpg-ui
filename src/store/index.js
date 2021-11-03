@@ -27,9 +27,10 @@ export default new Vuex.Store({
       state.character = JSON.parse(msg.data);
     },
     SET_IMAGE(state, msg) {
-      var image = new Image();
-      image.src = "data:image/jpeg;base64," + msg.data
-      state.images = [...state.images, image];
+      //var image = new Image();
+      console.log(msg.type)
+      let strSource = "data:image/jpeg;base64," + msg.data
+      state.images = [...state.images, strSource];
     }
   },
   actions: {

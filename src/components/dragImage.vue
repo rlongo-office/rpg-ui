@@ -11,23 +11,21 @@
           v-on:touchend="handleMouseUp"
           class="wrapper">
             <img
-              id = "imgEl"
               v-on:load="imageLoad" 
               ref="imgEl" 
               :style="{ objectPosition: imgLEFT+ 'px ' + imgTOP + 'px' }"
-              :src="imageBytes"         
-              >
+              :src = "img">
         </div>
       </div>
   </div>
 </template>
 
 <script>
-//import newImage from "c:/development/maps/testwebmap.jpg"
+     import mapImage from "c:/development/maps/testwebmap.jpg"
 export default {
   name: 'Map',
   data:()=>({
-    img:"",
+    img: mapImage,
     imgTOP: 0,
     imgLEFT: 0,
     isFirstPress: true,
@@ -42,13 +40,13 @@ export default {
     oldMouseY:0
   }),
   computed: {
-      imageBytes(){
-        return this.$store.state.images[0]
-      }
+
     },
 methods: {
+    
     imageLoad(){
       let image = this.$refs.imgEl
+      console.log(image.clientWidth + "," + image.clientHeight)
       this.topLimit = -(image.clientHeight-this.divHeight)
       this.leftLimit = -(image.clientWidth-this.divWidth)
     },
