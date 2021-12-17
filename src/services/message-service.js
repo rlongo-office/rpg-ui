@@ -28,7 +28,7 @@ const messageHandler = (message) => {
 export default {
     async connect(username, password) {
         return new Promise((resolve, reject) =>{
-          _socket = new SockJS("http://localhost:8095/game-app");
+          _socket = new SockJS("https://rpg-dnd-server.herokuapp.com/game-app");
           _stompClient = WebStompClient.over(_socket);
           _stompClient.connect(
               {username, password},

@@ -38,14 +38,17 @@ export default new Vuex.Store({
         // Do something here... lets say, a http call using vue-resource
           try {
             await messageService.connect(username, password);
-            let msg = {id:0, type: "character", data:"character", dest:["Bob"]};
+            let msg = {id:0, type: "character", data:"character", dest:[username]};
             await context.dispatch('sendMessage',msg);
-            msg = {id:0, type: "image", data:"image", dest:["Bob"]};
+            msg = {id:0, type: "image", data:"image", dest:[username]};
             await context.dispatch('sendMessage',msg)
             // do the rest here
           } catch {
             // handle error
           }
+    },
+    async getTheData(){
+      messageService.getAPIData();
     },
     setConnected(context, isConnected) {
       context.commit('setConnected', isConnected);
