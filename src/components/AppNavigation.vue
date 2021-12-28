@@ -13,11 +13,15 @@
         <v-icon color=#ffffff>mdi-message-outline</v-icon>
       </v-btn>
       <v-btn to="/map" class="white--text">
-        <span>map</span>
+        <span>Map</span>
         <v-icon color=#ffffff>mdi-map-outline</v-icon>
       </v-btn>
       <v-btn to="/lore" class="white--text">
         <span>Lore</span>
+        <v-icon color=#ffffff>mdi-script-text-outline</v-icon>
+      </v-btn>
+      <v-btn to="/actors" class="white--text">
+        <span>Actors</span>
         <v-icon color=#ffffff>mdi-script-text-outline</v-icon>
       </v-btn>
   </v-bottom-navigation>

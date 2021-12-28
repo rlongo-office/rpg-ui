@@ -7,13 +7,23 @@ Vue.use(Vuex);
 
 //import gameService from "../services/game-service";
 import messageService from "../services/message-service"
+import creatures from "../data/collections/creatures.json"
+import items from "../data/collections/items.json"
+import spells from "../data/collections/spells.json"
+import storylines from "../data/collections/storylines.json"
 
 export default new Vuex.Store({
   state: {
     isConnected: false,
     chatMessages: [{id:0,type:"info",data:"Beginning of Messages"}],
     character: {name:"",race:{},dieties:[]},
-    images:[]
+    images:[],
+    creatures:creatures,
+    items:items,
+    spells: spells,
+    actors:[],
+    storylines: storylines,
+    zones:[]
   },
   mutations: {
     setConnected(state, isConnected) {
@@ -31,24 +41,69 @@ export default new Vuex.Store({
       console.log(msg.type)
       let strSource = "data:image/jpeg;base64," + msg.data
       state.images = [...state.images, strSource];
-    }
+    },
+    SET_ACTOR(state, newActor){
+      let actor = newActor
+      state.actors.push(actor);
+    },
+    setZones(state, arrZone){
+      state.zones = arrZone
+    },
+    setActors(state, arrActors){
+      state.actors = arrActors
+    },
+    setStorylines(state, arrStorylines){
+      state.storylines = arrStorylines
+    },    
+    setItems(state, arrItems){
+      state.items = arrItems
+    },    
+    setCreatures(state, arrCreatures){
+      state.creatures = arrCreatures
+      console.log(state.creatures)
+    },    
   },
   actions: {
     async connect(context, {username, password}) {
         // Do something here... lets say, a http call using vue-resource
           try {
-            await messageService.connect(username, password);
-            let msg = {id:0, type: "character", data:"character", dest:[username]};
-            await context.dispatch('sendMessage',msg);
-            msg = {id:0, type: "image", data:"image", dest:[username]};
-            await context.dispatch('sendMessage',msg)
+            await messageService.connect(username, password)
+            console.log ("connection successful")
+            //let msg = {id:0, type: "character", data:"character", dest:[username]};
+            //await context.dispatch('getCreatures')
+            //let msg = {id:0, type: "image", data:"image", dest:[username]};
+            //await context.dispatch('sendMessage',msg)
             // do the rest here
+            //load storylines
+            //load NPCs
+            //items
           } catch {
             // handle error
           }
     },
     async getTheData(){
       messageService.getAPIData();
+    },
+    getCreatures(context){
+      console.log("Vue Store-action: getCreatures")
+      let creatures = messageService.getCreatures()
+      context.commit('setCreatures',creatures)
+    },
+    getItems(context){
+      let items = null
+      context.commit('setItems',items)
+    },
+    getStorylines(context){
+      let storylines = null
+      context.commit('setStorylines',storylines)
+    },
+    getZones(context){
+      let zones = null
+      context.commit('setZones',zones)
+    },
+    getActors(context){
+      let actors = null
+      context.commit('setActors',actors)
     },
     setConnected(context, isConnected) {
       context.commit('setConnected', isConnected);
@@ -64,6 +119,9 @@ export default new Vuex.Store({
     },
     loadImage(context, msg) {
       context.commit('SET_IMAGE', msg);
+    },
+    setActor(context,actor){
+      context.commit('SET_ACTOR',actor)
     }
   },
   modules: {},

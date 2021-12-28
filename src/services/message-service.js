@@ -1,11 +1,16 @@
 import store from '../store';
 import SockJS from "sockjs-client";
 import WebStompClient from 'webstomp-client';
+import axios from "../../node_modules/axios/lib/axios.js"
 
 // define the game service resources here
 let _isConnected = false;
 let _socket = null;
 let _stompClient = null;
+const endpoint = 'https://data.mongodb-api.com/app/data-xuvxd/endpoint/data/beta';
+const clusterName = "Cluster0"
+const apikey = "1qwvrQgPulmVNGsRbMLQcad2J5aQHBeWn3KbG8EfFIJ9s18SBNu5D3R68D4a7f0J";
+
 
 const messageHandler = (message) => {
   // fire the 'connect' callbacks
@@ -67,53 +72,53 @@ export default {
                           _stompClient.send("/app/messages", msgString, {}); break;
             }
         }
-    }
-}
-/*
-  connect: function() {
-              this.socket = new SockJS("http://localhost:8090/game-app");
-              this.stompClient = WebStompClient.over(this.socket);
-              this.connected = true;
-              this.stompClient.connect(
-                { username: this.userName,},
-                frame =>{
-                    console.log(frame);
-                    this.stompClient.subscribe('/topic/chat', (message)=> {
-                      console.log("You have recieved a chat message:" + message);
-                      this.msgCount += 1;
-                      const chatMessage = JSON.stringify(message.body);
-                      const newMessage = {"id":this.msgCount,"type":"G","body":chatMessage}
-                      this.allMessages.push(newMessage);
-                   });
-                    this.stompClient.subscribe('/user/queue/message', (message)=> {
-                      this.msgCount += 1;
-                      const chatMessage = JSON.stringify(message.body);
-                      const newMessage = {"id":this.msgCount,"type":"P","body":chatMessage}
-                      //this.received_messages.push(newMessage);
-                      this.allMessages.push(newMessage);
-                    });
-                },
-                error => {
-                  console.log(error);
-                  this.connected = false;
-                }
-              );        
-            },
-    disconnect() {
-      if (this.stompClient) {
-        this.stompClient.disconnect();
+    },
+
+    async getCreatures(){
+      //const query = { name: { $regex: ``, $options: 'i' } }
+      const findEndpoint = endpoint + '/action/find'
+      /*
+      const payload = { 
+        collection: "creatures", 
+        database: "D20RPG-DATA", 
+        dataSource: clusterName
       }
-      this.connected = false;
-    },
-    tickleConnection() {
-      this.connected ? this.disconnect() : this.connect();
-    },
-    classSelector() {
-    }
+      */
+      var config = {
+        method: 'POST',
+        mode: 'no-cors',
+        url: findEndpoint,
+        headers: { 
+          "api-key": apikey,
+          'Content-Type': 'application/json',
+          'Access-Control-Request-Headers': '*'
+        },
+        data: JSON.stringify({
+          "dataSource": clusterName, 
+          "database": "D20RPG-DATA", 
+          "collection": "creatures",
+        }),
+      }
+
+      axios(config)
+        .then(function (response){
+            console.log(JSON.stringify(response.data));
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
   },
-  mounted() {
-    // this.connect();
-  }
-};
-</script>
-*/
+    getItems(){
+
+    },
+    getActors(){
+
+    },
+    getStorylines(){
+
+    },
+    getZones(){
+
+    },
+
+}

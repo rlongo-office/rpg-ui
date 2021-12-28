@@ -98,7 +98,7 @@ methods: {
         //if scaling flag is set, clear the canvas and draw the image at the correct scale
         if (this.isScaling){
           this.imgScale = parseInt(this.dist(e)/this.touchDist);
-          if (this.imgScale < 1) this.imgScale=1; 
+          if (this.imgScale < 1) this.imgScale=1;
         }
         // if the drag flag is set, clear the canvas and draw the image
         if(this.isDragging && !this.isFirstPress){

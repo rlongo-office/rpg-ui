@@ -47,6 +47,15 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/Chat2.vue"),
   },
+  {
+    path: "/Actors",
+    name: "Actors",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/Actors.vue"),
+  }
 ];
 
 const router = new VueRouter({
