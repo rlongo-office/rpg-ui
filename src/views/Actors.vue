@@ -44,7 +44,7 @@ export default {
     return {
       creatures:[],
       creatureID:0,
-      //actors:[],
+      actorHeader: ['actID','Name','source', 'HD', 'challenge'],
       input: {
         name: "Creature"
       },
@@ -68,7 +68,7 @@ export default {
       },
         actorParams: {
         data: [
-          ['appID','Name','source', 'HD', 'challenge']
+          
         ],
         header: 'row',
         border:true,
@@ -78,14 +78,33 @@ export default {
         pageSize: 10,
         pageSizes: [5,10,15,25],
         sort: [0, 1, 2, 3],
+        columnWidth: [
+                      {column: 0, width: '10%'},
+                      {column: 1, width: '30%'},
+                      {column: 2, width: '30%'},
+                      {column: 3, width: '15%'},
+                      {column: 4, width: '15%'}
+                      ]
       }
     }
   },
   computed: {
-              actors(){
-                return this.$store.state.actors
+              actors:
+              {
+                    get()
+                    {
+                      return this.$store.state.actors
+                    },
+                    set(actors)
+                    {
+                      return actors
+                    }
               }
-
+  },
+  watch: {
+              actors(newArray) {
+                this.addActorData(newArray)
+              }
   },
   mounted(){
       this.creatures = this.$store.state.creatures
@@ -93,9 +112,25 @@ export default {
             let creature = [x, this.creatures[x].name, this.creatures[x].hit_dice, this.creatures[x].challenge_rating]
             this.creatureParams.data.push(creature)
       }
-      this.actors = this.$store.state.creatures
+      this.actorParams.data.push(this.actorHeader)
   },
   methods: {
+
+    addActorData(actors){
+        let dataArray = []
+        dataArray.push(this.actorHeader)
+        for (let x=0; x< actors.length; x++){
+            dataArray.push([ 
+                          actors[x].actID,
+                          actors[x].name,
+                          actors[x].source,
+                          actors[x].hit_dice, 
+                          actors[x].challenge_rating
+                        ])
+        }
+        this.actorParams.data = dataArray
+    },
+
     onCellChange (rowIndex, columnIndex, data) {
       console.log('onCellChange: ', rowIndex, columnIndex, data)
 
@@ -103,7 +138,6 @@ export default {
     onCellClick (rowIndex, columnIndex, data) {
       console.log('onCellClick: ', rowIndex, columnIndex, data)
       //console.log('table data: ', this.$refs.table.getData())
-      console.log(this.creatures[rowIndex-1])
       this.creatureID = rowIndex-1
       this.input.name = this.creatures[rowIndex-1].name
     },
@@ -113,15 +147,17 @@ export default {
       let lastID =  this.$store.state.actors.length - 1
       let newID = lastID + 1
       actor.name = this.input.name
-      actor.appID = newID
+      actor.actID = newID
       actor.source = this.creatures[this.creatureID].name
-      let actorTableData = [ actor.appID,
-                              actor.name,
-                              actor.source,
-                              actor.hit_dice, 
-                              actor.challenge_rating
-                            ]
-      this.actorParams.data.push(actorTableData)
+      /*
+        let actorTableData = [ actor.appID,
+                                actor.name,
+                                actor.source,
+                                actor.hit_dice, 
+                                actor.challenge_rating
+                              ]
+        this.actorParams.data.push(actorTableData) 
+      */
       this.$store.dispatch('setActor', actor)
     }
   },
