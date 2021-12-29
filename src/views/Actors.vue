@@ -2,26 +2,8 @@
   <div>
     <div class="row">
       <div class="column">
-        <vue-table-dynamic
-          id = "creatures"
-          :params="creatureParams"
-          @cell-change="onCellChange"
-          @cell-click="onCellClick"
-          ref="table"
-        >
-        </vue-table-dynamic>
-        <table class="inputs">
-          <tr></tr>
-          <tr>
-            <td><b>ID:</b><label id="creatureId">{{ creatureID }}</label></td>
-            <td><b>Name:</b></td><td class="bigInput">
-              <input type="text" class="form-control" name="inputName" v-model="input.name" />
-          </td>
-          </tr>
-          <tr>
-            <button @click="addActor">Add Actor</button>
-          </tr>
-        </table>
+            <creature-table>
+            </creature-table>
       </div>
       <div class="column">
         <vue-table-dynamic
@@ -37,39 +19,16 @@
 
 <script>
 import VueTableDynamic from 'vue-table-dynamic'
+import CreatureTable from '../components/CreatureTable.vue'
 
 export default {
   name: 'Actors',
   data() {
     return {
-      creatures:[],
-      creatureID:0,
       actorHeader: ['actID','Name','source', 'HD', 'challenge'],
-      input: {
-        name: "Creature"
-      },
-      creatureParams: {
-        data: [
-          ['id','Name', 'HD', 'challenge']
-        ],
-        header: 'row',
-        border:true,
-        stripe: true,
-        enableSearch: true,
-        pagination: true,
-        pageSize: 10,
-        pageSizes: [5,10,15,25],
-        sort: [0, 1, 2, 3],
-        edit: {
-          row: [1],
-          column: [1],
-          cell: [[-1, -1]]
-        }
-      },
         actorParams: {
         data: [
-          
-        ],
+                ],
         header: 'row',
         border:true,
         stripe: true,
@@ -84,7 +43,7 @@ export default {
                       {column: 2, width: '30%'},
                       {column: 3, width: '15%'},
                       {column: 4, width: '15%'}
-                      ]
+                    ]
       }
     }
   },
@@ -107,15 +66,9 @@ export default {
               }
   },
   mounted(){
-      this.creatures = this.$store.state.creatures
-      for (let x=0; x< this.creatures.length; x++){
-            let creature = [x, this.creatures[x].name, this.creatures[x].hit_dice, this.creatures[x].challenge_rating]
-            this.creatureParams.data.push(creature)
-      }
       this.actorParams.data.push(this.actorHeader)
   },
   methods: {
-
     addActorData(actors){
         let dataArray = []
         dataArray.push(this.actorHeader)
@@ -130,38 +83,8 @@ export default {
         }
         this.actorParams.data = dataArray
     },
-
-    onCellChange (rowIndex, columnIndex, data) {
-      console.log('onCellChange: ', rowIndex, columnIndex, data)
-
-    },
-    onCellClick (rowIndex, columnIndex, data) {
-      console.log('onCellClick: ', rowIndex, columnIndex, data)
-      //console.log('table data: ', this.$refs.table.getData())
-      this.creatureID = rowIndex-1
-      this.input.name = this.creatures[rowIndex-1].name
-    },
-    addActor(){
-      // call the dispatch service to add Actors to the store object
-      let actor = JSON.parse(JSON.stringify(this.creatures[this.creatureID]))
-      let lastID =  this.$store.state.actors.length - 1
-      let newID = lastID + 1
-      actor.name = this.input.name
-      actor.actID = newID
-      actor.source = this.creatures[this.creatureID].name
-      /*
-        let actorTableData = [ actor.appID,
-                                actor.name,
-                                actor.source,
-                                actor.hit_dice, 
-                                actor.challenge_rating
-                              ]
-        this.actorParams.data.push(actorTableData) 
-      */
-      this.$store.dispatch('setActor', actor)
-    }
   },
-  components: { VueTableDynamic }
+  components: { VueTableDynamic,'creature-table':CreatureTable }
 }
 </script>
 <style>
