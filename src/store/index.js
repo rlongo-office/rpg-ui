@@ -3,7 +3,7 @@ import Vue from "vue";
 import Vuex, { Store } from "vuex";
 
 Vue.config.devtools = true;
-Vue.use(Vuex);
+Vue.use(Vuex)
 
 //import gameService from "../services/game-service";
 import messageService from "../services/message-service"
