@@ -44,7 +44,8 @@ export default new Vuex.Store({
     },
     SET_ACTOR(state, newActor){
       let actor = newActor
-      state.actors.push(actor);
+      state.actors.push(actor)
+      window.localStorage.setItem('actors',state.actors)
     },
     setZones(state, arrZone){
       state.zones = arrZone
