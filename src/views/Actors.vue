@@ -109,7 +109,6 @@ export default {
     },
     addActor(){
       // call the dispatch service to add Actors to the store object
-      let testArray = JSON.stringify([{id:3,name:'bob'},{id:3,name:'john'}])
       let actor = JSON.parse(JSON.stringify(this.creatures[this.creatureID]))
       let lastID =  this.$store.state.actors.length - 1
       let newID = lastID + 1
@@ -124,8 +123,6 @@ export default {
                             ]
       this.actorParams.data.push(actorTableData)
       this.$store.dispatch('setActor', actor)
-      window.localStorage.setItem('test',testArray)
-      console.log(window.localStorage.test)
     }
   },
   components: { VueTableDynamic }
