@@ -23,7 +23,8 @@ export default new Vuex.Store({
     spells: spells,
     actors:[],
     storylines: storylines,
-    zones:[]
+    zones:[],
+    encounters:[]
   },
   mutations: {
     setConnected(state, isConnected) {
@@ -46,6 +47,11 @@ export default new Vuex.Store({
       let actor = newActor
       state.actors.push(actor)
       window.localStorage.setItem('actors',state.actors)
+    },
+    SET_ENCOUNTER(state, newEncounter){
+      let encounter = newEncounter
+      state.encounters.push(encounter)
+      window.localStorage.setItem('encounters',state.encounters)
     },
     setZones(state, arrZone){
       state.zones = arrZone
@@ -123,6 +129,9 @@ export default new Vuex.Store({
     },
     setActor(context,actor){
       context.commit('SET_ACTOR',actor)
+    },
+    setEncounter(context,encounter){
+      context.commit('SET_ENCOUNTER',encounter)
     }
   },
   modules: {},
