@@ -3,7 +3,7 @@
     <vue-table-dynamic
         id = "actors"
         :params="actorParams"
-        ref="table2"
+        ref="actorTable"
     >
     </vue-table-dynamic>
   </div>

@@ -30,8 +30,9 @@ export default {
     return {
       creatures:[],
       creatureID:0,
+      creatureHeader: ['ID','Name','HD', 'challenge'],
       input: {
-        name: "Creature"
+        name: "CreatureTable"
       },
       creatureParams: {
         data: [
@@ -108,22 +109,12 @@ export default {
 </script>
 <style>
 
+.button {
+  border: 1px;
+  border-color: blue;
+}
+
 .bigInput{
    width: 80px;
-}
-
-/* Create two equal columns that floats next to each other */
-.column {
-  float: left;
-  width: 50%;
-  padding: 10px;
-  height: 300px; /* Should be removed. Only for demonstration */
-}
-
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
 }
 </style>

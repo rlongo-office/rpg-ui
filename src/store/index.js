@@ -53,6 +53,12 @@ export default new Vuex.Store({
       state.encounters.push(encounter)
       window.localStorage.setItem('encounters',state.encounters)
     },
+    SET_STORYLINE(state, newStoryline){
+      let storyline = newStoryline
+      state.storyline.push(storyline)
+      window.localStorage.setItem('storylines',state.storylines)
+    },
+
     setZones(state, arrZone){
       state.zones = arrZone
     },
@@ -132,7 +138,11 @@ export default new Vuex.Store({
     },
     setEncounter(context,encounter){
       context.commit('SET_ENCOUNTER',encounter)
+    },
+    setStoryline(context,storyline){
+      context.commit('SET_STORYLINE',storyline)
     }
+
   },
   modules: {},
 });
