@@ -27,7 +27,7 @@ export default {
         pagination: true,
         pageSize: 10,
         pageSizes: [5,10,15,25],
-        sort: [0, 1, 2, 3],
+        sort: [0, 1, 2, 3, 4],
         columnWidth: [
                         {column: 0, width: '20%'},
                         {column: 1, width: '35%'},
@@ -53,19 +53,27 @@ export default {
   },
   watch: {
               storylines(newArray) {
-                this.addStorylineData(newArray)
+                console.log(this.$store.state.storylines)
+                console.log(newArray)
+                //this.addStorylineData(newArray)
               }
   },
   mounted(){
+            let dataArray = []
             this.storylineParams.data.push(this.storylineHeader)
+            dataArray.push(this.storylineHeader)
+            let limit = 30
             for (let x=0; x< this.storylines.length; x++){
+                let description =  this.storylines[x].description.length > limit ?            //table has issue with strings longer than column length
+                                   `${this.storylines[x].description.substr(0,limit)}...` :   //so trimming string off if beyond column width (the limit)
+                                   this.storylines[x].description;
                 let storyline = [
-                                    this.storylines[x].name, 
-                                    this.storylines[x].description,
+                                    this.storylines[x].name,
+                                    description,
                                     this.storylines[x].type,
                                     "NS"
                                 ]
-                if (this.storylines[x].parentLines.length>0){  //if this storyline has links to parent storylines
+                if (this.storylines[x].parentLines.length > 0){  //if this storyline has links to parent storylines
                     let parentStories = ""
                     let end = this.storylines[x].parentLines.length - 1
                     for (let y=0; y<this.storylines[x].parentLines.length; y++){
@@ -73,10 +81,14 @@ export default {
                         if (y != end){parentStories += ","}  //only require commas for non-ending list items
                     }
                     storyline.splice(2,0,parentStories)
-                }
-                this.storylineParams.data.push(storyline)
+                } else { 
+                          storyline.splice(2,0,"") 
+                        }
+
+                dataArray.push(storyline)
       }
-      console.log("storyline table mounted with following data" + this.storylineParams.data)
+      console.log(dataArray)
+      this.storylineParams.data = dataArray
   },
   methods: {
     addStorylineData(storylines){

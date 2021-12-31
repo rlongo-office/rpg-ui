@@ -9,19 +9,17 @@
         <actor-table></actor-table>
       </div>
     </div>
-    <story-line></story-line>
   </div>
 </template>
 
 <script>
 import CreatureTable from '../components/CreatureTable.vue'
 import ActorTable from '../components/ActorTable.vue'
-import StorylineTable from '../components/StorylineTable.vue'
 
 export default {
   name: 'Actors',
   
-  components: {'creature-table':CreatureTable,'actor-table':ActorTable,'story-line':StorylineTable }
+  components: {'creature-table':CreatureTable,'actor-table':ActorTable}
 }
 </script>
 <style>
