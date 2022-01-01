@@ -6,6 +6,9 @@
         ref="storylineTable"
     >
     </vue-table-dynamic>
+    <div>
+      <button @click="addStoryline">Add Storyline</button>
+    </div>
   </div>
 </template>
 
@@ -17,6 +20,7 @@ export default {
   data() {
     return {
       storylineHeader: ['Name','description','Parents', 'Type', 'status'],
+      strLimit:30,
         storylineParams: {
         data: [
                 ],
@@ -53,25 +57,22 @@ export default {
   },
   watch: {
               storylines(newArray) {
-                console.log(this.$store.state.storylines)
-                console.log(newArray)
-                //this.addStorylineData(newArray)
+                this.addStorylineData(newArray)
               }
   },
   mounted(){
             let dataArray = []
             this.storylineParams.data.push(this.storylineHeader)
             dataArray.push(this.storylineHeader)
-            let limit = 30
             for (let x=0; x< this.storylines.length; x++){
-                let description =  this.storylines[x].description.length > limit ?            //table has issue with strings longer than column length
-                                   `${this.storylines[x].description.substr(0,limit)}...` :   //so trimming string off if beyond column width (the limit)
+                let description =  this.storylines[x].description.length > this.strLimit ?            //table has issue with strings longer than column length
+                                   `${this.storylines[x].description.substr(0,this.strLimit)}...` :   //so trimming string off if beyond column width (the limit)
                                    this.storylines[x].description;
                 let storyline = [
                                     this.storylines[x].name,
                                     description,
                                     this.storylines[x].type,
-                                    "NS"
+                                    this.storylines[x].status,
                                 ]
                 if (this.storylines[x].parentLines.length > 0){  //if this storyline has links to parent storylines
                     let parentStories = ""
@@ -87,31 +88,44 @@ export default {
 
                 dataArray.push(storyline)
       }
-      console.log(dataArray)
       this.storylineParams.data = dataArray
   },
   methods: {
     addStorylineData(storylines){
-            this.storylineParams.data.push(this.storylineHeader)
+            let dataArray = []
+            dataArray.push(this.storylineHeader)
             for (let x=0; x< storylines.length; x++){
+              let description =  storylines[x].description.length > this.strLimit ?            //table has issue with strings longer than column length
+                                `${storylines[x].description.substr(0,this.strLimit)}...` :   //so trimming string off if beyond column width (the limit)
+                                   storylines[x].description;
                 let storyline = [
                                     storylines[x].name, 
-                                    storylines[x].description,
+                                    description,
                                     storylines[x].type,
-                                    "NS"
+                                    storylines[x].status,
                                 ]
-                if (storylines[x].parentLines.length>0){  //if this storyline has links to parent storylines
+                if (this.storylines[x].parentLines.length > 0){  //if this storyline has links to parent storylines
                     let parentStories = ""
-                    let end = storylines[x].parentLines.length - 1
-                    for (let y=0; y<storylines[x].parentLines.length; y++){
-                        parentStories += storylines[x].parentLines[y]
+                    let end = this.storylines[x].parentLines.length - 1
+                    for (let y=0; y<this.storylines[x].parentLines.length; y++){
+                        parentStories += this.storylines[x].parentLines[y]
                         if (y != end){parentStories += ","}  //only require commas for non-ending list items
                     }
                     storyline.splice(2,0,parentStories)
-                }
-                this.storylineParams.data.push(storyline)
+                } else { 
+                          storyline.splice(2,0,"") 
+                        }
+                dataArray.push(storyline)
       }
+      this.storylineParams.data = dataArray
     },
+    addStoryline(){
+      let newStory = JSON.parse(JSON.stringify(this.storylines[1]))
+      newStory.name = "Reaming the Cube"
+      newStory.parentLines = []
+      newStory.conditions = []
+      this.$store.dispatch('setStoryline', newStory)
+    }
   },
   components: { VueTableDynamic }
 }

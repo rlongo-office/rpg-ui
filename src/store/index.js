@@ -55,7 +55,7 @@ export default new Vuex.Store({
     },
     SET_STORYLINE(state, newStoryline){
       let storyline = newStoryline
-      state.storyline.push(storyline)
+      state.storylines.push(storyline)
       window.localStorage.setItem('storylines',state.storylines)
     },
 
