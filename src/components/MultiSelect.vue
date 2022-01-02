@@ -1,14 +1,22 @@
 <template>
     <div>
         <select @change="onChangeSelected($event)" multiple>
-            <option v-for="option in selectOptions" :value="option.id" :key="option.id">{{ option.option }}</option>
+            <option value="optionHeader" disabled>Select {{objectType}}</option>
+            <option v-for="option in options" :value="option.value" :key="option.id">{{ option.option }}</option>
         </select>
     </div>
 </template>
 <script>
 export default {
-  name: 'Test',
-  props: ['options'],
+  name: 'MultiSelect',
+    props: {
+        options: {
+            type: Array
+        },
+        objectType:{
+            type:String
+        }
+    },
   data(){
       return {
           selectOptions:[],  
@@ -16,7 +24,8 @@ export default {
       }
   },
   mounted() {
-    this.selectOptions = [{id:0,option:"Bob"},{id:1,option:"Ralph"},{id:2,option:"Frank"},{id:3,option:"Frannie"}]
+    
+    this.selectOptions = [{id:0,value:"Bob"},{id:1,value:"Ralph"},{id:2,value:"Frank"},{id:3,value:"Frannie"}]
     console.log(this.selectedOptions)
   },
   methods: {
