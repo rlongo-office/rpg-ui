@@ -9,6 +9,8 @@
               v-on:changed="processResults"
             />
     </div>
+    <div>
+    </div>
   </div>
 </template>
 
@@ -29,7 +31,7 @@ export default {
         console.log(resultList)
     }
   },
-  components: {'story-line':StorylineTable,'multi-selected':MultiSelected }
+  components: {'story-line':StorylineTable,'multi-selected':MultiSelected}
 }
 </script>
 <style>
